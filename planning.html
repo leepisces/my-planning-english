@@ -1,0 +1,2954 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Learning Tracker 🌟</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '✨';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            top: -20px;
+            left: 50px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .header::after {
+            content: '🎯';
+            position: absolute;
+            font-size: 80px;
+            opacity: 0.1;
+            bottom: -10px;
+            right: 50px;
+            animation: float 3s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: #f8f9ff;
+            border-bottom: 3px solid #e8eaff;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #5c6bc0;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .week-section {
+            margin: 20px;
+            border: 2px solid #e8eaff;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .week-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .week-header {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .week-progress {
+            background: rgba(255,255,255,0.2);
+            height: 6px;
+            border-radius: 3px;
+            width: 100px;
+            overflow: hidden;
+        }
+
+        .week-progress-bar {
+            height: 100%;
+            background: #fff;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 3px;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background: #fafbff;
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e8eaff;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .day-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #ffa726, #66bb6a, #42a5f5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .day-card.completed::before {
+            opacity: 1;
+        }
+
+        .day-card.completed {
+            background: linear-gradient(135deg, #e8f5e8, #f0fff0);
+            border-color: #66bb6a;
+            transform: scale(1.02);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .day-title {
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: white;
+        }
+
+        .skill-nghe { background: #ffa726; }
+        .skill-noi { background: #ff7043; }
+        .skill-ngu-phap { background: #5c6bc0; }
+        .skill-tu-vung { background: #66bb6a; }
+        .skill-on { background: #ab47bc; }
+        .skill-flexible { background: #78909c; }
+
+        .checkbox-container {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-checkbox {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .custom-checkbox.checked {
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
+            border-color: #4caf50;
+            animation: bounce 0.5s ease;
+        }
+
+        .custom-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 60%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            80% { transform: translateY(-5px); }
+        }
+
+        .task-content {
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .task-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .task-content li {
+            padding: 5px 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .task-content li::before {
+            content: '📚';
+            position: absolute;
+            left: 0;
+            top: 5px;
+        }
+
+        .month-divider {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .month-divider::before {
+            content: '🚀';
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .month-divider h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .month-divider p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            color: white;
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            display: none;
+            z-index: 2000;
+            animation: celebrationPop 0.5s ease;
+        }
+
+        @keyframes celebrationPop {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .celebration h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 1500;
+        }
+
+        @media (max-width: 768px) {
+            .days-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .controls {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌟 English Learning Journey 🌟</h1>
+            <p>12 tuần chinh phục tiếng Anh từ B1 lên B2!</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalDays">84</div>
+                <div class="stat-label">Tổng số ngày</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="completedDays">0</div>
+                <div class="stat-label">Đã hoàn thành</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="progressPercent">0%</div>
+                <div class="stat-label">Tiến độ</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="currentStreak">0</div>
+                <div class="stat-label">Streak hiện tại</div>
+            </div>
+        </div>
+
+        <!-- THÁNG 1 -->
+        <div class="month-divider">
+            <h2>THÁNG 1: FOUNDATION BUILDING</h2>
+            <p>Xây dựng nền tảng vững chắc - B1 Level Mastery</p>
+        </div>
+
+        <!-- Week 1 -->
+        <div class="week-section" data-week="1">
+            <div class="week-header">
+                <span>📅 TUẦN 1: XÂY DỰNG FOUNDATION</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <!-- Monday -->
+                <div class="day-card" data-day="1-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Dictation: Food topic (nghe 3 lần, chép chính tả)</li>
+                            <li>Ghi 5 từ/cụm từ mới + pronunciation</li>
+                            <li>Bonus: Nghe lại 2 lần để improve fluency</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="day-card" data-day="1-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 1 - Conversation đầu tiên</li>
+                            <li>Ghi âm: Đọc theo mẫu 3 lần</li>
+                            <li>Practice: "What do you do?" "Where are you from?"</li>
+                            <li>Self-check: Note 2 điểm cần cải thiện</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="day-card" data-day="1-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B1 Unit 1: Present Simple</li>
+                            <li>Theory: 30 phút đọc + làm exercises</li>
+                            <li>Application: Viết 5 câu mô tả thói quen bản thân</li>
+                            <li>Review: Check lỗi và sửa</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Thursday -->
+                <div class="day-card" data-day="1-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B1 Unit 3: Hobbies & Leisure</li>
+                            <li>Study: 10 từ mới + example sentences</li>
+                            <li>Practice: 5 câu ngắn về sở thích</li>
+                            <li>Speaking: Ghi âm nói 1 phút về 1 hobby</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Friday -->
+                <div class="day-card" data-day="1-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 1: Listening Comprehension</li>
+                            <li>Method: Nghe 3 lần, trả lời questions</li>
+                            <li>Vocabulary: Ghi 3 cụm từ mới + usage</li>
+                            <li>Connect: Link với từ vựng đã học thứ 5</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="day-card" data-day="1-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">ÔN + NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Review: 15 từ mới + Present Simple structures</li>
+                            <li>Speaking: "My daily routine" 2-3 phút</li>
+                            <li>Recording: Ghi âm và note improvement points</li>
+                            <li>Self-assessment: Rate pronunciation 1-10</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="day-card" data-day="1-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">FLEXIBLE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Video: 1 short English video với subtitle</li>
+                            <li>Note: 3 interesting phrases</li>
+                            <li>Relax: Nghe nhạc tiếng Anh (optional)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 2 -->
+        <div class="week-section" data-week="2">
+            <div class="week-header">
+                <span>📅 TUẦN 2: CONSOLIDATION & EXPANSION</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <!-- Days for Week 2 -->
+                <div class="day-card" data-day="2-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Dictation: Work topic</li>
+                            <li>Compare: So sánh accuracy với tuần 1</li>
+                            <li>Vocabulary: 5 từ mới + connect với TopNotch</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="2-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 2: New conversation</li>
+                            <li>Improvement: So sánh recording với tuần 1</li>
+                            <li>New challenge: Talk about work/studies 2 phút</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="2-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B1 Unit 2: Past Simple</li>
+                            <li>Integration: Kết hợp với Present Simple</li>
+                            <li>Story: Viết đoạn văn ngắn về yesterday</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="2-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B1 Unit 6: Work & Career</li>
+                            <li>Connection: Link với listening thứ 2</li>
+                            <li>Review: 10 từ cũ + 10 từ mới</li>
+                            <li>Speaking: Job interview roleplay (ghi âm)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="2-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 2: Listening exercises</li>
+                            <li>Strategy: Note-taking while listening</li>
+                            <li>Vocabulary: Build work-related phrases</li>
+</ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 3 -->
+        <div class="week-section" data-week="3">
+            <div class="week-header">
+                <span>📅 TUẦN 3: BUILDING CONFIDENCE</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <div class="day-card" data-day="3-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Dictation: Travel topic</li>
+                            <li>Speed increase: Thử tốc độ nhanh hơn</li>
+                            <li>Preparation: Vocab cho TopNotch Unit 3</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="3-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 3: Travel conversations</li>
+                            <li>Challenge: Không nhìn text, chỉ nghe và repeat</li>
+                            <li>Roleplay: Airport/Hotel scenarios</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="3-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B1 Unit 5: Future forms</li>
+                            <li>Travel plans: Viết kế hoạch du lịch bằng tiếng Anh</li>
+                            <li>Mix tenses: Present, Past, Future trong 1 đoạn văn</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="3-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B1 Unit 12: Travel & Transport</li>
+                            <li>Practical: 15 từ essential cho du lịch</li>
+                            <li>Speaking: "My dream vacation" 3 phút</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="3-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 3: Travel listening</li>
+                            <li>Real-world: Nghe travel announcements</li>
+                            <li>Note-taking: Practice ghi chú nhanh</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="3-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">ÔN + NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>3-tense review: Present/Past/Future</li>
+                            <li>Fluency: "Travel experience" 4-5 phút không dừng</li>
+                            <li>Self-evaluation: Fluency, accuracy, vocabulary usage</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="3-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">FLEXIBLE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Travel vlogs: English travel YouTubers</li>
+                            <li>Inspiration: Note 5 places you want to visit</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 4 -->
+        <div class="week-section" data-week="4">
+            <div class="week-header">
+                <span>📅 TUẦN 4: INTEGRATION & PREPARATION</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <div class="day-card" data-day="4-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Mixed topics: Dictation từ 3 chủ đề đã học</li>
+                            <li>Speed test: Measure improvement</li>
+                            <li>Preparation: Vocab cho tháng 2</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="4-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 4: New topic introduction</li>
+                            <li>Confidence test: 5 phút presentation về any topic</li>
+                            <li>Recording analysis: Note major improvements</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="4-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B1 Unit 8: Modal verbs (can, should, must)</li>
+                            <li>Advice giving: Practice giving suggestions</li>
+                            <li>Review: Test mix của 4 grammar points</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="4-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B1 Unit 15: Food & Health</li>
+                            <li>Integration: Use với tất cả grammar đã học</li>
+                            <li>Speaking: "Healthy lifestyle" với modal verbs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="4-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Assessment: TopNotch 3 Unit 4 listening</li>
+                            <li>Challenge: Không nhìn questions trước</li>
+                            <li>Comparison: So với tuần 1 performance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="4-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">TỔNG KẾT</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Grammar mix: Tất cả structures trong 1 conversation</li>
+                            <li>Final speaking: 7-8 phút về "My month of learning"</li>
+                            <li>Goal setting: Plan cho tháng 2</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="4-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">REFLECTION</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Portfolio review: Nghe lại recordings từ tuần 1</li>
+                            <li>Progress journal: Viết reflection bằng tiếng Anh</li>
+                            <li>Preparation: Mental prep cho tháng 2 challenges</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THÁNG 2 -->
+        <div class="month-divider">
+            <h2>THÁNG 2: INTERMEDIATE DEVELOPMENT</h2>
+            <p>Chuyển đổi sang B2 Level - Advanced Structures & Fluency</p>
+        </div>
+
+        <!-- Week 5 -->
+        <div class="week-section" data-week="5">
+            <div class="week-header">
+                <span>📅 TUẦN 5: TRANSITION TO B2</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <div class="day-card" data-day="5-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Dictation: Education topic</li>
+                            <li>New challenge: Faster speed + accent variety</li>
+                            <li>TopNotch 3: Unit 5 preview listening</li>
+                            <li>Vocabulary: 5 academic words + usage</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="5-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 5: Education conversations</li>
+                            <li>Upgrade: 10-minute presentation về education system</li>
+                            <li>Pronunciation: Focus on word stress patterns</li>
+                            <li>Recording: Compare với tháng 1 baseline</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="5-3">
+                    <div class="day-header">
+                        <div class="day-title">
+Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Pronunciation: Linking sounds practice</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="6-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 5: Conditionals (1st, 2nd type)</li>
+                            <li>Scenarios: Technology "what if" situations</li>
+                            <li>Creative: Write 10 conditional sentences</li>
+                            <li>Speaking: Use conditionals in conversation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="6-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 8: Technology & Innovation</li>
+                            <li>Collocations: 25 tech phrases (AI, social media, etc.)</li>
+                            <li>Discussion: "Future technology" 6 phút</li>
+                            <li>Review: Education vocab from tuần 5</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="6-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 6: Tech interviews/discussions</li>
+                            <li>Authentic: YouTube tech reviews (native speed)</li>
+                            <li>Comprehension: Understand opinions and reasons</li>
+                            <li>Vocabulary: Informal tech expressions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="6-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">ÔN + NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Conditional practice: Real-life scenarios</li>
+                            <li>Presentation: "Technology in my life" 10 phút</li>
+                            <li>Fluency goal: 90% comprehensible speech</li>
+                            <li>Recording: Track improvement patterns</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="6-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">TECH FOCUS</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Tech YouTubers: Unbox Therapy, Marques Brownlee</li>
+                            <li>Understanding: Follow without subtitles</li>
+                            <li>Vocabulary: Consumer tech terminology</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 7 -->
+        <div class="week-section" data-week="7">
+            <div class="week-header">
+                <span>📅 TUẦN 7: CULTURAL & SOCIAL TOPICS</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <div class="day-card" data-day="7-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Dictation: Culture topic</li>
+                            <li>Challenge: Different English accents (UK, US, AU)</li>
+                            <li>Cultural podcast: BBC Culture or similar</li>
+                            <li>Vocabulary: Cultural expressions and idioms</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="7-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 7: Cultural discussions</li>
+                            <li>Cultural exchange: Compare Vietnamese vs Western culture</li>
+                            <li>Storytelling: Share cultural experiences 8 phút</li>
+                            <li>Pronunciation: Intonation for emphasis</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="7-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 10: Passive voice (all tenses)</li>
+                            <li>Cultural context: "How traditions are preserved"</li>
+                            <li>Transformation: Active to passive practice</li>
+                            <li>Writing: Cultural essay using passive voice</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="7-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 12: Culture & Society</li>
+                            <li>Advanced: 30 cultural/social terminology</li>
+                            <li>Discussion: "Cultural differences" 7 phút</li>
+                            <li>Review: Tech vocabulary consolidation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="7-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 7: Cultural interviews</li>
+                            <li>Authentic: Travel vlogs về different cultures</li>
+                            <li>Understanding: Cultural nuances in speech</li>
+                            <li>Vocabulary: Informal cultural expressions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="7-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">ÔN + NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Passive voice integration: Natural usage</li>
+                            <li>Presentation: "My culture vs others" 12 phút</li>
+                            <li>Fluency: Smooth transitions between ideas</li>
+                            <li>Self-assessment: Content organization skills</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="7-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">CULTURAL</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Travel documentaries: BBC, National Geographic</li>
+                            <li>Cultural awareness: Different perspectives</li>
+                            <li>Vocabulary: Descriptive cultural language</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 8 -->
+        <div class="week-section" data-week="8">
+            <div class="week-header">
+                <span>📅 TUẦN 8: MONTH 2 CONSOLIDATION</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <div class="day-card" data-day="8-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Mixed dictation: Education + Tech + Culture</li>
+                            <li>Speed test: Compare với tuần 1 tháng 2</li>
+                            <li>Preparation: Vocabulary cho tháng 3</li>
+                            <li>Assessment: Listening comprehension improvement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="8-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 8: Synthesis conversations</li>
+                            <li>Challenge: 15-minute presentation combining all topics</li>
+                            <li>Fluency: Speak without preparation on any topic</li>
+                            <li>Recording: Month 2 final assessment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="8-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>B2 Grammar review: Present Perfect, Conditionals, Passive</li>
+                            <li>Integration: Complex sentences with multiple structures</li>
+                            <li>Error correction: Identify and fix common mistakes</li>
+                            <li>Preparation: Advanced structures for tháng 3</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="8-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Month 2 vocabulary: 150+ words comprehensive review</li>
+                            <li>Collocations: 75+ phrases mastery check</li>
+                            <li>Speaking: Use advanced vocabulary naturally</li>
+                            <li>Maintenance: Tháng 1 vocabulary retention test</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="8-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Assessment: TopNotch 3 comprehensive listening</li>
+                            <li>Real-world: News broadcasts, interviews</li>
+                            <li>Comparison: Tháng 1 vs Tháng 2 progress</li>
+                            <li>Goal setting: Tháng 3 listening targets</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="8-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">MONTH REVIEW</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>All grammar: Natural integration in speech</li>
+                            <li>Final presentation: 15-20 phút về any topic</li>
+                            <li>Self-evaluation: Identify strengths và areas for improvement</li>
+                            <li>Planning: Set goals cho tháng 3</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="8-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">CELEBRATION</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Portfolio review: All recordings từ tháng 2</li>
+                            <li>Progress journal: Reflection bằng tiếng Anh</li>
+                            <li>Reward: Enjoy English entertainment guilt-free!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THÁNG 3 -->
+        <div class="month-divider">
+            <h2>THÁNG 3: ADVANCED INTEGRATION & MASTERY</h2>
+            <p>Hoàn thiện B2 Level - Native-like Communication</p>
+        </div>
+
+        <!-- Week 9 -->
+        <div class="week-section" data-week="9">
+            <div class="week-header">
+                <span>📅 TUẦN 9: ADVANCED STRUCTURES</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <div class="day-card" data-day="9-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>News listening: BBC World Service (15 phút)</li>
+                            <li>No transcript: Rely on comprehension only</li>
+                            <li>Current events: International news vocabulary</li>
+                            <li>Challenge: Summarize news in own words</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="9-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 9: Advanced conversations</li>
+                            <li>News presentation: 10-minute current events talk</li>
+                            <li>Interaction: Q&A with yourself về news</li>
+                            <li>Pronunciation: Connected speech patterns</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="9-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 15: Advanced conditionals (3rd type)</li>
+                            <li>Hypothetical: Past regrets and alternatives</li>
+                            <li>Mixed conditionals: Complex scenarios</li>
+                            <li>Speaking: Natural conditional usage</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="9-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 18: Global Issues</li>
+                            <li>Advanced: 35 sophisticated vocabulary items</li>
+                            <li>Discussion: "World problems and solutions" 10 phút</li>
+                            <li>Review: Month 2 vocabulary active usage</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="9-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 9: News and current events</li>
+                            <li>Authentic: CNN Student News or similar</li>
+                            <li>Analysis: Understand bias and perspective</li>
+                            <li>Vocabulary: Formal news language</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="9-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">ÔN + NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Advanced conditionals: Fluent usage</li>
+                            <li>Presentation: "If I could change the world" 15 phút</li>
+                            <li>Sophistication: Use complex sentence structures</li>
+                            <li>Goal: University-level speaking</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="9-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">NEWS FOCUS</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>International news: BBC, CNN, Reuters</li>
+                            <li>Analysis: Different perspectives on same events</li>
+                            <li>Vocabulary: Political and economic terms</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 10 -->
+        <div class="week-section" data-week="10">
+            <div class="week-header">Destination B2 Unit 1: Present Perfect vs Past Simple</li>
+                            <li>Advanced: Present Perfect Continuous</li>
+                            <li>Application: Life experiences essay (150 words)</li>
+                            <li>Error analysis: Common mistakes identification</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="5-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 2: Education & Learning</li>
+                            <li>Collocations: 20 education-related phrases</li>
+                            <li>Speaking: "My learning journey" 5 phút</li>
+                            <li>Review: Tháng 1 vocabulary maintenance test</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="5-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 5: Academic listening</li>
+                            <li>Note-taking: Practice lecture-style listening</li>
+                            <li>Comprehension: Answer without multiple choice</li>
+                            <li>Vocabulary: Academic transition words</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="5-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">ÔN + NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Grammar integration: B1 + B2 structures mix</li>
+                            <li>Fluency: "Education pros and cons" 8 phút</li>
+                            <li>Self-correction: Identify and fix mistakes while speaking</li>
+                            <li>Goal: Speak with minimal hesitation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="5-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">UPGRADE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TED-Ed videos: 5-10 phút educational content</li>
+                            <li>Active listening: Pause and summarize key points</li>
+                            <li>Vocabulary: Note 5 academic expressions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 6 -->
+        <div class="week-section" data-week="6">
+            <div class="week-header">
+                <span>📅 TUẦN 6: BUILDING COMPLEXITY</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <div class="day-card" data-day="6-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Dictation: Technology topic</li>
+                            <li>Challenge: No replay, write what you catch</li>
+                            <li>Podcast: BBC 6 Minute English episode</li>
+                            <li>Vocabulary: Tech terminology + pronunciation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-day="6-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 6: Technology discussions</li>
+                            <li>Debate: "Technology: helpful or harmful?" 10 phút</li>
+                            <li>Fluency drill: Speak 2 minutes on random tech topics</li>
+                            <li>Pronunciation: Linking sounds practice</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="day-card" data-day="6-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 5: Conditionals (1st, 2nd type)</li>
+                            <li>Scenarios: Technology "what if" situations</li>
+                            <li>Creative: Write 10 conditional sentences</li>
+                            <li>Speaking: Use conditionals in conversation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Thursday -->
+                <div class="day-card" data-day="6-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 8: Technology & Innovation</li>
+                            <li>Collocations: 25 tech phrases (AI, social media, etc.)</li>
+                            <li>Discussion: "Future technology" 6 phút</li>
+                            <li>Review: Education vocab from tuần 5</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Friday -->
+                <div class="day-card" data-day="6-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 6: Tech interviews/discussions</li>
+                            <li>Authentic: YouTube tech reviews (native speed)</li>
+                            <li>Comprehension: Understand opinions and reasons</li>
+                            <li>Vocabulary: Informal tech expressions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="day-card" data-day="6-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">ÔN + NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Conditional practice: Real-life scenarios</li>
+                            <li>Presentation: "Technology in my life" 10 phút</li>
+                            <li>Fluency goal: 90% comprehensible speech</li>
+                            <li>Recording: Track improvement patterns</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="day-card" data-day="6-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">TECH FOCUS</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Tech YouTubers: Unbox Therapy, Marques Brownlee</li>
+                            <li>Understanding: Follow without subtitles</li>
+                            <li>Vocabulary: Consumer tech terminology</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 7 -->
+        <div class="week-section" data-week="7">
+            <div class="week-header">
+                <span>📅 TUẦN 7: CULTURAL & SOCIAL TOPICS</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <!-- Monday -->
+                <div class="day-card" data-day="7-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Dictation: Culture topic</li>
+                            <li>Challenge: Different English accents (UK, US, AU)</li>
+                            <li>Cultural podcast: BBC Culture or similar</li>
+                            <li>Vocabulary: Cultural expressions and idioms</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="day-card" data-day="7-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 7: Cultural discussions</li>
+                            <li>Cultural exchange: Compare Vietnamese vs Western culture</li>
+                            <li>Storytelling: Share cultural experiences 8 phút</li>
+                            <li>Pronunciation: Intonation for emphasis</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="day-card" data-day="7-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 10: Passive voice (all tenses)</li>
+                            <li>Cultural context: "How traditions are preserved"</li>
+                            <li>Transformation: Active to passive practice</li>
+                            <li>Writing: Cultural essay using passive voice</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Thursday -->
+                <div class="day-card" data-day="7-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 12: Culture & Society</li>
+                            <li>Advanced: 30 cultural/social terminology</li>
+                            <li>Discussion: "Cultural differences" 7 phút</li>
+                            <li>Review: Tech vocabulary consolidation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Friday -->
+                <div class="day-card" data-day="7-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 7: Cultural interviews</li>
+                            <li>Authentic: Travel vlogs về different cultures</li>
+                            <li>Understanding: Cultural nuances in speech</li>
+                            <li>Vocabulary: Informal cultural expressions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="day-card" data-day="7-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">ÔN + NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Passive voice integration: Natural usage</li>
+                            <li>Presentation: "My culture vs others" 12 phút</li>
+                            <li>Fluency: Smooth transitions between ideas</li>
+                            <li>Self-assessment: Content organization skills</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="day-card" data-day="7-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">CULTURAL</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Travel documentaries: BBC, National Geographic</li>
+                            <li>Cultural awareness: Different perspectives</li>
+                            <li>Vocabulary: Descriptive cultural language</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 8 -->
+        <div class="week-section" data-week="8">
+            <div class="week-header">
+                <span>📅 TUẦN 8: MONTH 2 CONSOLIDATION</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <!-- Monday -->
+                <div class="day-card" data-day="8-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Mixed dictation: Education + Tech + Culture</li>
+                            <li>Speed test: Compare với tuần 1 tháng 2</li>
+                            <li>Preparation: Vocabulary cho tháng 3</li>
+                            <li>Assessment: Listening comprehension improvement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="day-card" data-day="8-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 8: Synthesis conversations</li>
+                            <li>Challenge: 15-minute presentation combining all topics</li>
+                            <li>Fluency: Speak without preparation on any topic</li>
+                            <li>Recording: Month 2 final assessment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="day-card" data-day="8-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>B2 Grammar review: Present Perfect, Conditionals, Passive</li>
+                            <li>Integration: Complex sentences with multiple structures</li>
+                            <li>Error correction: Identify and fix common mistakes</li>
+                            <li>Preparation: Advanced structures for tháng 3</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Thursday -->
+                <div class="day-card" data-day="8-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Month 2 vocabulary: 150+ words comprehensive review</li>
+                            <li>Collocations: 75+ phrases mastery check</li>
+                            <li>Speaking: Use advanced vocabulary naturally</li>
+                            <li>Maintenance: Tháng 1 vocabulary retention test</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Friday -->
+                <div class="day-card" data-day="8-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Assessment: TopNotch 3 comprehensive listening</li>
+                            <li>Real-world: News broadcasts, interviews</li>
+                            <li>Comparison: Tháng 1 vs Tháng 2 progress</li>
+                            <li>Goal setting: Tháng 3 listening targets</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="day-card" data-day="8-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">MONTH REVIEW</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>All grammar: Natural integration in speech</li>
+                            <li>Final presentation: 15-20 phút về any topic</li>
+                            <li>Self-evaluation: Identify strengths và areas for improvement</li>
+                            <li>Planning: Set goals cho tháng 3</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="day-card" data-day="8-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">CELEBRATION</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Portfolio review: All recordings từ tháng 2</li>
+                            <li>Progress journal: Reflection bằng tiếng Anh</li>
+                            <li>Reward: Enjoy English entertainment guilt-free!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THÁNG 3 -->
+        <div class="month-divider">
+            <h2>THÁNG 3: ADVANCED INTEGRATION & MASTERY</h2>
+            <p>Hoàn thithiện kỹ năng - Achieving B2 Level Excellence</p>
+        </div>
+
+        <!-- Week 9 -->
+        <div class="week-section" data-week="9">
+            <div class="week-header">
+                <span>📅 TUẦN 9: ADVANCED STRUCTURES</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <!-- Monday -->
+                <div class="day-card" data-day="9-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>News listening: BBC World Service (15 phút)</li>
+                            <li>No transcript: Rely on comprehension only</li>
+                            <li>Current events: International news vocabulary</li>
+                            <li>Challenge: Summarize news in own words</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="day-card" data-day="9-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 9: Advanced conversations</li>
+                            <li>News presentation: 10-minute current events talk</li>
+                            <li>Interaction: Q&A with yourself về news</li>
+                            <li>Pronunciation: Connected speech patterns</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="day-card" data-day="9-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 15: Advanced conditionals (3rd type)</li>
+                            <li>Hypothetical: Past regrets and alternatives</li>
+                            <li>Mixed conditionals: Complex scenarios</li>
+                            <li>Speaking: Natural conditional usage</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Thursday -->
+                <div class="day-card" data-day="9-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 18: Global Issues</li>
+                            <li>Advanced: 35 sophisticated vocabulary items</li>
+                            <li>Discussion: "World problems and solutions" 10 phút</li>
+                            <li>Review: Month 2 vocabulary active usage</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Friday -->
+                <div class="day-card" data-day="9-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 9: News and current events</li>
+                            <li>Authentic: CNN Student News or similar</li>
+                            <li>Analysis: Understand bias and perspective</li>
+                            <li>Vocabulary: Formal news language</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="day-card" data-day="9-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">ÔN + NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Advanced conditionals: Fluent usage</li>
+                            <li>Presentation: "If I could change the world" 15 phút</li>
+                            <li>Sophistication: Use complex sentence structures</li>
+                            <li>Goal: University-level speaking</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="day-card" data-day="9-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">NEWS FOCUS</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>International news: BBC, CNN, Reuters</li>
+                            <li>Analysis: Different perspectives on same events</li>
+                            <li>Vocabulary: Political and economic terms</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 10 -->
+        <div class="week-section" data-week="10">
+            <div class="week-header">
+                <span>📅 TUẦN 10: PROFESSIONAL COMMUNICATION</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <!-- Monday -->
+                <div class="day-card" data-day="10-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Business podcasts: Harvard Business Review ideacast</li>
+                            <li>Professional: Workplace communication</li>
+                            <li>Vocabulary: Business terminology and phrases</li>
+                            <li>Understanding: Professional context and register</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="day-card" data-day="10-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 10: Professional scenarios</li>
+                            <li>Business presentation: 12-minute professional topic</li>
+                            <li>Roleplay: Job interviews, meetings, negotiations</li>
+                            <li>Pronunciation: Professional tone and clarity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="day-card" data-day="10-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 20: Reported speech</li>
+                            <li>Professional: Report conversations and meetings</li>
+                            <li>Transformation: Direct to indirect speech</li>
+                            <li>Application: Business communication contexts</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Thursday -->
+                <div class="day-card" data-day="10-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 22: Work & Business</li>
+                            <li>Professional: 40 business vocabulary items</li>
+                            <li>Discussion: "Career goals and challenges" 10 phút</li>
+                            <li>Review: Global issues vocabulary from tuần 9</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Friday -->
+                <div class="day-card" data-day="10-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 10: Business communications</li>
+                            <li>Authentic: Business meetings, presentations</li>
+                            <li>Comprehension: Understand implications and subtext</li>
+                            <li>Vocabulary: Professional idioms and expressions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="day-card" data-day="10-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">ÔN + NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Reported speech: Natural integration</li>
+                            <li>Professional presentation: 15 phút business topic</li>
+                            <li>Fluency: Professional register throughout</li>
+                            <li>Assessment: Workplace communication readiness</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="day-card" data-day="10-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">BUSINESS</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Business documentaries: Entrepreneur stories</li>
+                            <li>Professional development: TED Talks business</li>
+                            <li>Vocabulary: Entrepreneurship and innovation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 11 -->
+        <div class="week-section" data-week="11">
+            <div class="week-header">
+                <span>📅 TUẦN 11: ACADEMIC & ABSTRACT TOPICS</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <!-- Monday -->
+                <div class="day-card" data-day="11-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Academic lectures: MIT OpenCourseWare short videos</li>
+                            <li>Complex: Abstract concepts and theories</li>
+                            <li>Note-taking: Academic listening strategies</li>
+                            <li>Vocabulary: Academic and scientific terms</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="day-card" data-day="11-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 11: Academic discussions</li>
+                            <li>Lecture: 15-minute academic presentation</li>
+                            <li>Abstract thinking: Discuss theories and concepts</li>
+                            <li>Pronunciation: Academic vocabulary stress</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="day-card" data-day="11-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">NGỮ PHÁP</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 25: Gerunds and infinitives</li>
+                            <li>Academic: Complex sentence structures</li>
+                            <li>Formal writing: Academic style usage</li>
+                            <li>Speaking: Formal presentation structures</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Thursday -->
+                <div class="day-card" data-day="11-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">TỪ VỰNG</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Destination B2 Unit 28: Science & Research</li>
+                            <li>Academic: 45 sophisticated vocabulary items</li>
+                            <li>Discussion: "Scientific advancement" 12 phút</li>
+                            <li>Review: Business vocabulary consolidation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Friday -->
+                <div class="day-card" data-day="11-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-nghe">NGHE</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>TopNotch 3 Unit 11: Academic content</li>
+                            <li>Authentic: University lectures or seminars</li>
+                            <li>Analysis: Follow complex arguments</li>
+                            <li>Vocabulary: Academic discourse markers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="day-card" data-day="11-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">ÔN + NÓI</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Gerunds/infinitives: Natural academic usage</li>
+                            <li>Academic presentation: 18 phút research topic</li>
+                            <li>Sophistication: University-level communication</li>
+                            <li>Goal: Ready for academic environments</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="day-card" data-day="11-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 📺
+                            <span class="skill-badge skill-flexible">ACADEMIC</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>University lectures: Coursera, edX previews</li>
+                            <li>Knowledge: Learn while practicing English</li>
+                            <li>Vocabulary: Field-specific terminology</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 12 -->
+        <div class="week-section" data-week="12">
+            <div class="week-header">
+                <span>📅 TUẦN 12: FINAL INTEGRATION & ASSESSMENT</span>
+                <div class="week-progress">
+                    <div class="week-progress-bar"></div>
+                </div>
+            </div>
+            <div class="days-grid">
+                <!-- Monday -->
+                <div class="day-card" data-day="12-1">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 2 🟡
+                            <span class="skill-badge skill-nghe">LISTENING TEST</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Comprehensive: All topics and speeds</li>
+                            <li>Assessment: News, business, academic, casual</li>
+                            <li>Comparison: Tháng 1 baseline vs current</li>
+                            <li>Goal: 90%+ comprehension native speed</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="day-card" data-day="12-2">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 3 🟠
+                            <span class="skill-badge skill-noi">SPEAKING TEST</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Final presentation: 25-30 phút any topic</li>
+                            <li>Fluency: No preparation, natural flow</li>
+                            <li>Assessment: Pronunciation, grammar, vocabulary</li>
+                            <li>Recording: Portfolio completion</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="day-card" data-day="12-3">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 4 🔵
+                            <span class="skill-badge skill-ngu-phap">GRAMMAR TEST</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Comprehensive: All B1-B2 structures</li>
+                            <li>Integration: Complex sentences, natural usage</li>
+                            <li>Error-free: 95%+ accuracy target</li>
+                            <li>Application: Real communication contexts</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Thursday -->
+                <div class="day-card" data-day="12-4">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 5 🟢
+                            <span class="skill-badge skill-tu-vung">VOCABULARY TEST</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Comprehensive: 400+ words from 3 months</li>
+                            <li>Active usage: Natural incorporation in speech</li>
+                            <li>Collocations: 200+ phrases mastery</li>
+                            <li>Assessment: Sophisticated vocabulary usage</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Friday -->
+                <div class="day-card" data-day="12-5">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 6 🟡
+                            <span class="skill-badge skill-flexible">REAL-WORLD TEST</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Authentic: Movies, podcasts, news without help</li>
+                            <li>Comprehension: Understand implications, humor, culture</li>
+                            <li>Goal: Ready for real English environments</li>
+                            <li>Confidence: No fear of native content</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="day-card" data-day="12-6">
+                    <div class="day-header">
+                        <div class="day-title">
+                            Thứ 7 🟠
+                            <span class="skill-badge skill-on">FINAL ASSESSMENT</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Integration: All skills in natural communication</li>
+                            <li>Presentation: 30 phút "My English journey"</li>
+                            <li>Fluency: Continuous, natural, engaging speech</li>
+                            <li>Achievement: B1 → B2 transition complete</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="day-card" data-day="12-7">
+                    <div class="day-header">
+                        <div class="day-title">
+                            CN 🎉
+                            <span class="skill-badge skill-flexible">CELEBRATION</span>
+                        </div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <ul>
+                            <li>Portfolio review: All recordings from 3 months</li>
+                            <li>Reflection: Write success story in English</li>
+                            <li>Planning: Next steps for continued improvement</li>
+                            <li>Reward: You've earned it!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="control-btn" onclick="resetProgress()">🔄 Reset All</button>
+        <button class="control-btn" onclick="exportProgress()">💾 Export Data</button>
+        <button class="control-btn" onclick="showStats()">📊 View Stats</button>
+    </div>
+
+    <div class="overlay"></div>
+    <div class="celebration">
+        <h3>🎉 Congratulations! 🎉</h3>
+        <p>You've completed another day of your English journey!</p>
+        <button class="control-btn" onclick="hideCelebration()">Continue</button>
+    </div>
+
+    <script>
+        let progress = JSON.parse(localStorage.getItem('englishProgress') || '{}');
+        let streakData = JSON.parse(localStorage.getItem('streakData') || '{"current": 0, "lastDate": null}');
+
+        function updateStats() {
+            const totalDays = 84;
+            const completedDays = Object.keys(progress).length;
+            const progressPercent = Math.round((completedDays / totalDays) * 100);
+            
+            document.getElementById('totalDays').textContent = totalDays;
+            document.getElementById('completedDays').textContent = completedDays;
+            document.getElementById('progressPercent').textContent = progressPercent + '%';
+            document.getElementById('currentStreak').textContent = streakData.current;
+
+            // Update week progress bars
+            for (let week = 1; week <= 12; week++) {
+                const weekDays = document.querySelectorAll(`[data-day^="${week}-"]`);
+                const completedWeekDays = Array.from(weekDays).filter(day => 
+                    progress[day.dataset.day]
+                ).length;
+                const weekProgress = (completedWeekDays / weekDays.length) * 100;
+                
+                const progressBar = document.querySelector(`[data-week="${week}"] .week-progress-bar`);
+                if (progressBar) {
+                    progressBar.style.width = weekProgress + '%';
+                }
+            }
+        }
+
+        function toggleTask(dayId) {
+            const dayCard = document.querySelector(`[data-day="${dayId}"]`);
+            const checkbox = dayCard.querySelector('.custom-checkbox');
+            
+            if (progress[dayId]) {
+                delete progress[dayId];
+                dayCard.classList.remove('completed');
+                checkbox.classList.remove('checked');
+            } else {
+                progress[dayId] = new Date().toISOString();
+                dayCard.classList.add('completed');
+                checkbox.classList.add('checked');
+                
+                updateStreak();
+                showCelebration();
+            }
+            
+            localStorage.setItem('englishProgress', JSON.stringify(progress));
+            updateStats();
+        }
+
+        function updateStreak() {
+            const today = new Date().toDateString();
+            const yesterday = new Date(Date.now() - 86400000).toDateString();
+            
+            if (streakData.lastDate === today) {
+                return; // Already counted today
+            }
+            
+            if (streakData.lastDate === yesterday || streakData.lastDate === null) {
+                streakData.current += 1;
+            } else {
+                streakData.current = 1;
+            }
+            
+            streakData.lastDate = today;
+            localStorage.setItem('streakData', JSON.stringify(streakData));
+        }
+
+        function showCelebration() {
+            document.querySelector('.overlay').style.display = 'block';
+            document.querySelector('.celebration').style.display = 'block';
+            
+            setTimeout(() => {
+                hideCelebration();
+            }, 3000);
+        }
+
+        function hideCelebration() {
+            document.querySelector('.overlay').style.display = 'none';
+            document.querySelector('.celebration').style.display = 'none';
+        }
+
+        function resetProgress() {
+            if (confirm('Bạn có chắc chắn muốn reset toàn bộ tiến độ?')) {
+                progress = {};
+                streakData = {"current": 0, "lastDate": null};
+                localStorage.removeItem('englishProgress');
+                localStorage.removeItem('streakData');
+                location.reload();
+            }
+        }
+
+        function exportProgress() {
+            const data = {
+                progress: progress,
+                streakData: streakData,
+                exportDate: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'english-learning-progress.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function showStats() {
+            const completedDays = Object.keys(progress).length;
+            const totalDays = 84;
+            const percentage = Math.round((completedDays / totalDays) * 100);
+            
+            alert(`📊 Thống kê học tập:
+• Tổng số ngày: ${totalDays}
+• Đã hoàn thành: ${completedDays}
+• Tiến độ: ${percentage}%
+• Streak hiện tại: ${streakData.current} ngày
+• Ngày bắt đầu streak: ${streakData.lastDate || 'Chưa bắt đầu'}`);
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved progress
+            Object.keys(progress).forEach(dayId => {
+                const dayCard = document.querySelector(`[data-day="${dayId}"]`);
+                if (dayCard) {
+                    dayCard.classList.add('completed');
+                    dayCard.querySelector('.custom-checkbox').classList.add('checked');
+                }
+            });
+
+            // Add click listeners
+            document.querySelectorAll('.day-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.closest('.custom-checkbox')) return;
+                    toggleTask(this.dataset.day);
+                });
+            });
+
+            updateStats();
+        });
+    </script>
+</body>
+</html>
