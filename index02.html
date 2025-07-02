@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Top Notch 3 - 10 Week Study Plan</title>
-    \n
+    
     <!-- PDF.js library for PDF viewing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
     <script>
@@ -321,7 +321,7 @@
       }
 
       .goal-check.checked::after {
-        content: "âœ“";
+        content: "✓";
         color: white;
         position: absolute;
         top: 50%;
@@ -2517,15 +2517,15 @@
         overlay.onclick = closeCelebration;
         document.body.appendChild(overlay);
 
-        // Create celebration popup
+       // Create celebration popup
         const celebration = document.createElement("div");
         celebration.className = "celebration";
         celebration.innerHTML = `
-        <div class="celebration-emoji">ðŸ¥³</div>
-        <h2>ðŸŽ‰ Xin chÃºc má»«ng! ðŸŽ‰</h2>
-        <p>Báº¡n Ä‘Ã£ hoÃ n thÃ nh Tuáº§n ${weekNumber}!</p>
-        <button id="celebrationCloseBtn">Tiáº¿p tá»¥c há»c táº­p</button>
-      `;
+                <div class="celebration-emoji">🥳</div>
+                <h2>🎉 Xin chúc mừng! 🎉</h2>
+                <p>Bạn đã hoàn thành Tuần ${weekNumber}!</p>
+                <button id="celebrationCloseBtn">Tiếp tục học tập</button>
+              `;
 
         document.body.appendChild(celebration);
 
@@ -2589,10 +2589,11 @@
           // Toggle current one
           inputContainer.classList.toggle("active");
           toggle.classList.toggle("active", !isActive);
+          
           toggle.querySelector("span").textContent = isActive
-            ? "ThÃªm ghi chÃº"
-            : "ÄÃ³ng ghi chÃº";
-          toggle.querySelector("i").textContent = isActive ? "â–¼" : "â–²";
+                      ? "Thêm ghi chú"
+                      : "Đóng ghi chú";
+          toggle.querySelector("i").textContent = isActive ? "▼" : "▲";
 
           if (!isActive) {
             notesContainer.querySelector(".notes-input").focus();
@@ -2614,8 +2615,8 @@
             .querySelector(".notes-input-container")
             .classList.remove("active");
           notesContainer.querySelector(".notes-toggle span").textContent =
-            "ThÃªm ghi chÃº";
-          notesContainer.querySelector(".notes-toggle i").textContent = "â–¼";
+            "Thêm ghi chú";
+          notesContainer.querySelector(".notes-toggle i").textContent = "▼";
           saveProgress();
         }
       }
@@ -2642,8 +2643,8 @@
           .querySelector(".notes-input-container")
           .classList.remove("active");
         notesContainer.querySelector(".notes-toggle span").textContent =
-          "ThÃªm ghi chÃº";
-        notesContainer.querySelector(".notes-toggle i").textContent = "â–¼";
+          "Thêm ghi chú";
+        notesContainer.querySelector(".notes-toggle i").textContent = "▼";
       }
 
       // Initialize on page load
@@ -2660,8 +2661,8 @@
       // Reset progress
       function resetProgress() {
         if (
-          confirm(
-            "Báº¡n cÃ³ cháº¯c cháº¯n muá»‘n xÃ³a toÃ n bá»™ tiáº¿n Ä‘á»™ há»c táº­p? HÃ nh Ä‘á»™ng nÃ y khÃ´ng thá»ƒ hoÃ n tÃ¡c."
+         confirm(
+            "Bạn có chắc chắn muốn xóa toàn bộ tiến độ học tập? Hành động này không thể hoàn tác."
           )
         ) {
           localStorage.removeItem("topNotch3Progress");
@@ -2681,7 +2682,7 @@
           updateProgressBar();
 
           // Show confirmation
-          alert("ÄÃ£ xÃ³a toÃ n bá»™ tiáº¿n Ä‘á»™ há»c táº­p!");
+         alert("Đã xóa toàn bộ tiến độ học tập!");
         }
       }
 
@@ -2707,26 +2708,7 @@
         linkElement.click();
       }
     </script>
-    <!-- PDF Viewer Modal -->
-    <div id="pdfModal" class="pdf-modal">
-      <div class="pdf-modal-content">
-        <span class="pdf-close">&times;</span>
-        <div class="pdf-header">
-          <h3 id="pdfTitle">PDF Viewer</h3>
-          <div class="pdf-controls">
-            <button id="prevPage">Previous</button>
-            <span id="pageInfo"
-              >Page <span id="currentPage">0</span> of
-              <span id="totalPages">0</span></span
-            >
-            <button id="nextPage">Next</button>
-          </div>
-        </div>
-        <div id="pdfContent">
-          <canvas id="pdfCanvas"></canvas>
-        </div>
-      </div>
-    </div>
+    
     <!-- Controls section at the bottom of the page -->
     <div class="controls">
       <button class="control-btn" onclick="resetProgress()">
