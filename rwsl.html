@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>12-Week English Learning Schedule Planner</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+        animation: pulse 4s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 0.8;
+        }
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .header p {
+        font-size: 1.2em;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+      }
+
+      .main-content {
+        padding: 30px;
+      }
+
+      .skill-selector {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .skill-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 3px solid transparent;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skill-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .skill-card:hover::before {
+        left: 100%;
+      }
+
+      .skill-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .skill-card.active {
+        border-color: #4facfe;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+      }
+
+      .skill-card h3 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .skill-icon {
+        font-size: 1.5em;
+      }
+
+      .week-range {
+        font-size: 0.9em;
+        opacity: 0.8;
+        margin-bottom: 5px;
+      }
+
+      .schedule-content {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .week-selector {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+
+      .week-btn {
+        padding: 12px 20px;
+        border: 2px solid #4facfe;
+        background: white;
+        color: #4facfe;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+      }
+
+      .week-btn:hover {
+        background: #4facfe;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .week-btn.active {
+        background: #4facfe;
+        color: white;
+      }
+
+      .daily-schedule {
+        display: grid;
+        gap: 15px;
+      }
+
+      .day-card {
+        background: linear-gradient(135deg, #f6f9fc 0%, #e9f4f8 100%);
+        border-radius: 12px;
+        padding: 20px;
+        border-left: 5px solid #4facfe;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .day-card:hover {
+        transform: translateX(5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .day-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .day-name {
+        font-weight: 700;
+        font-size: 1.2em;
+        color: #2d3748;
+      }
+
+      .day-activity {
+        font-size: 1em;
+        color: #4a5568;
+        line-height: 1.6;
+      }
+
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .custom-checkbox {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #4facfe;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .custom-checkbox.checked {
+        background: #4facfe;
+        border-color: #4facfe;
+      }
+
+      .custom-checkbox.checked::after {
+        content: "✓";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: #e2e8f0;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 20px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        transition: width 0.5s ease;
+        border-radius: 4px;
+      }
+
+      .progress-text {
+        text-align: center;
+        margin-top: 10px;
+        font-weight: 600;
+        color: #4a5568;
+      }
+
+      .writing-topics {
+        margin-top: 20px;
+        padding: 20px;
+        background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+        border-radius: 12px;
+      }
+
+      .writing-topics h4 {
+        margin-bottom: 15px;
+        color: #2d3748;
+      }
+
+      .topic-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .topic-item {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 12px;
+        border-radius: 8px;
+        border-left: 4px solid #e17055;
+      }
+
+      .current-date {
+        background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 100%);
+        border-left-color: #00b894;
+      }
+
+      .floating-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+
+      .floating-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+      }
+
+      .stats-panel {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .stat-card {
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 100%);
+        border-radius: 12px;
+        color: #2d3748;
+      }
+
+      .stat-number {
+        font-size: 2.5em;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .stat-label {
+        font-size: 1.1em;
+        opacity: 0.8;
+      }
+
+      @media (max-width: 768px) {
+        .skill-selector {
+          grid-template-columns: 1fr;
+        }
+
+        .week-selector {
+          justify-content: center;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .main-content {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>📚 12-Week English Learning Planner</h1>
+        <p>Master English through structured daily practice</p>
+      </div>
+
+      <div class="main-content">
+        <!-- Resources Section -->
+        <div class="resources-section">
+          <h2 style="margin-bottom: 20px; color: #4a5568;">📚 Learning Resources</h2>
+          <div class="resources-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px;">
+            
+            <!-- General Resources -->
+            <div class="resource-card" style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-top: 5px solid #4facfe;">
+              <h3 style="color: #2d3748; margin-bottom: 15px;">General English Learning</h3>
+              <ul style="list-style-type: none; padding-left: 0;">
+                <li style="margin-bottom: 12px;">
+                  <a href="https://learnenglish.britishcouncil.org/" target="_blank" style="color: #4facfe; text-decoration: none; display: flex; align-items: center;">
+                    <span style="background: #e6f7ff; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px;">🌐</span>
+                    British Council LearnEnglish
+                  </a>
+                </li>
+                <li style="margin-bottom: 12px;">
+                  <a href="https://english-practice.net" target="_blank" style="color: #4facfe; text-decoration: none; display: flex; align-items: center;">
+                    <span style="background: #e6f7ff; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px;">🔤</span>
+                    English Practice
+                  </a>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Grammar Resources -->
+            <div class="resource-card" style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-top: 5px solid #fd79a8;">
+              <h3 style="color: #2d3748; margin-bottom: 15px;">Grammar Practice</h3>
+              <ul style="list-style-type: none; padding-left: 0;">
+                <li style="margin-bottom: 12px;">
+                  <a href="https://www.perfect-english-grammar.com/grammar-exercises.html" target="_blank" style="color: #fd79a8; text-decoration: none; display: flex; align-items: center;">
+                    <span style="background: #ffe6f0; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px;">📝</span>
+                    Perfect English Grammar
+                  </a>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Reading Resources -->
+            <div class="resource-card" style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-top: 5px solid #a8e6cf;">
+              <h3 style="color: #2d3748; margin-bottom: 15px;">Reading Practice</h3>
+              <ul style="list-style-type: none; padding-left: 0;">
+                <li style="margin-bottom: 12px;">
+                  <a href="https://readtoolead.com/category/sorted-by-level/b2-upper-intermediate/" target="_blank" style="color: #00b894; text-decoration: none; display: flex; align-items: center;">
+                    <span style="background: #e6fff5; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px;">📚</span>
+                    Read to Lead (B2 Level)
+                  </a>
+                </li>
+                <li style="margin-bottom: 12px;">
+                  <a href="https://breakingnewsenglish.com/" target="_blank" style="color: #00b894; text-decoration: none; display: flex; align-items: center;">
+                    <span style="background: #e6fff5; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px;">📰</span>
+                    Breaking News English
+                  </a>
+                </li>
+                <li style="margin-bottom: 12px;">
+                  <a href="https://test-english.com/reading/b2/" target="_blank" style="color: #00b894; text-decoration: none; display: flex; align-items: center;">
+                    <span style="background: #e6fff5; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px;">📖</span>
+                    Test English (B2 Reading)
+                  </a>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- AI Practice Resources -->
+            <div class="resource-card" style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-top: 5px solid #a29bfe;">
+              <h3 style="color: #2d3748; margin-bottom: 15px;">AI Practice</h3>
+              <ul style="list-style-type: none; padding-left: 0;">
+                <li style="margin-bottom: 12px;">
+                  <a href="https://lingolang.ai" target="_blank" style="color: #a29bfe; text-decoration: none; display: flex; align-items: center;">
+                    <span style="background: #f0eeff; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px;">🤖</span>
+                    Lingolang
+                  </a>
+                </li>
+                <li style="margin-bottom: 12px;">
+                  <a href="https://germininn.com" target="_blank" style="color: #a29bfe; text-decoration: none; display: flex; align-items: center;">
+                    <span style="background: #f0eeff; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px;">🧠</span>
+                    Germininn
+                  </a>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Shadowing Resources -->
+            <div class="resource-card" style="background: white; border-radius: 15px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-top: 5px solid #ff7675;">
+              <h3 style="color: #2d3748; margin-bottom: 15px;">Shadowing Practice</h3>
+              <ul style="list-style-type: none; padding-left: 0;">
+                <li style="margin-bottom: 12px;">
+                  <a href="https://www.youtube.com/" target="_blank" style="color: #ff7675; text-decoration: none; display: flex; align-items: center;">
+                    <span style="background: #ffe6e6; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px;">🎬</span>
+                    YouTube
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="skill-selector">
+          <div class="skill-card active" data-skill="reading">
+            <h3><span class="skill-icon">📖</span> Reading</h3>
+            <div class="week-range">Weeks 1-3</div>
+            <div>08/07/2025 - 28/07/2025</div>
+          </div>
+          <div class="skill-card" data-skill="writing">
+            <h3><span class="skill-icon">✍️</span> Writing</h3>
+            <div class="week-range">Weeks 4-6</div>
+            <div>29/07/2025 - 18/08/2025</div>
+          </div>
+          <div class="skill-card" data-skill="speaking">
+            <h3><span class="skill-icon">🗣️</span> Speaking</h3>
+            <div class="week-range">Weeks 7-9</div>
+            <div>19/08/2025 - 08/09/2025</div>
+          </div>
+          <div class="skill-card" data-skill="listening">
+            <h3><span class="skill-icon">👂</span> Listening</h3>
+            <div class="week-range">Weeks 10-12</div>
+            <div>09/09/2025 - 29/09/2025</div>
+          </div>
+        </div>
+
+        <div class="schedule-content">
+          <div class="week-selector">
+            <button class="week-btn active" data-week="1">Week 1</button>
+            <button class="week-btn" data-week="2">Week 2</button>
+            <button class="week-btn" data-week="3">Week 3</button>
+          </div>
+
+          <div class="daily-schedule" id="dailySchedule">
+            <!-- Daily schedule will be populated here -->
+          </div>
+
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text" id="progressText">0% Complete</div>
+        </div>
+
+        <div class="stats-panel">
+          <h3 style="margin-bottom: 20px; text-align: center; color: #2d3748">
+            📊 Your Progress
+          </h3>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number" id="completedDays">0</div>
+              <div class="stat-label">Days Completed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="currentStreak">0</div>
+              <div class="stat-label">Current Streak</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="totalHours">0</div>
+              <div class="stat-label">Total Hours</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="skillProgress">0%</div>
+              <div class="stat-label">Skill Progress</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button
+      class="floating-btn"
+      onclick="resetProgress()"
+      title="Reset Progress"
+    >
+      🔄
+    </button>
+
+    <script>
+      // Learning plan data
+      const learningPlan = {
+        reading: {
+          weeks: 3,
+          schedule: {
+            1: {
+              Monday:
+                'Đọc bài "How to make friends as an adult" (Read to Lead) + Ghi chú 8 từ vựng.',
+              Tuesday:
+                "Làm bài Reading B2: A business blog (British Council) + kiểm tra đáp án.",
+              Wednesday: 'Đọc bài "The value of boredom" + viết tóm tắt 3 câu.',
+              Thursday: "Shadowing 10 phút với video của BBC Learning English.",
+              Friday:
+                "Làm bài Reading B2: Learning languages (Test-English.com).",
+              Saturday:
+                'Đọc bài "How to be interesting" + nói lại nội dung 1-2 phút.',
+              Sunday:
+                "Tổng kết tuần: ghi lại 10 từ/cụm từ học được + viết đoạn 80 từ.",
+            },
+            2: {
+              Monday:
+                "Đọc bài về Technology từ Breaking News English + ghi chú từ vựng.",
+              Tuesday:
+                "Làm bài Reading B2: Social media impact (British Council).",
+              Wednesday: 'Đọc bài "Digital detox" + viết tóm tắt 5 câu.',
+              Thursday: "Shadowing 10 phút với video TED-Ed.",
+              Friday: "Làm bài Reading B2: Online learning (Test-English.com).",
+              Saturday: 'Đọc bài "Future of work" + thảo luận nội dung 2 phút.',
+              Sunday:
+                "Tổng kết tuần: ôn lại từ vựng + viết đoạn 100 từ về chủ đề technology.",
+            },
+            3: {
+              Monday:
+                "Đọc bài về Environment từ BBC Learning English + ghi chú.",
+              Tuesday: "Làm bài Reading B2: Climate change (British Council).",
+              Wednesday:
+                'Đọc bài "Sustainable living" + viết tóm tắt chi tiết.',
+              Thursday: "Shadowing 15 phút với video về environment.",
+              Friday:
+                "Làm bài Reading B2: Green technology (Test-English.com).",
+              Saturday: 'Đọc bài "Renewable energy" + presentation 3 phút.',
+              Sunday:
+                "Tổng kết 3 tuần Reading: ôn tập toàn bộ từ vựng + viết essay 150 từ.",
+            },
+          },
+        },
+        writing: {
+          weeks: 3,
+          schedule: {
+            1: {
+              Monday:
+                "Viết bài: Describe your favorite place (Write&Improve hoặc gửi cho ChatGPT sửa).",
+              Tuesday:
+                "Học lại các lỗi ngữ pháp đã gặp hôm qua + viết lại câu đúng.",
+              Wednesday:
+                "Viết bài: Do you think students should wear uniforms?",
+              Thursday:
+                "Luyện viết lại đoạn văn dùng cấu trúc câu điều kiện + liên từ.",
+              Friday:
+                "Viết bài: A time you helped someone + gửi để được nhận xét.",
+              Saturday:
+                "Tổng hợp từ vựng học được qua 3 bài viết, viết đoạn áp dụng lại từ đó.",
+              Sunday: "Tự do viết thêm 1 bài theo chủ đề tự chọn.",
+            },
+            2: {
+              Monday:
+                "Viết bài: Some people think watching TV is a waste of time. Do you agree?",
+              Tuesday:
+                "Học lại lỗi sai từ bài hôm qua + luyện cấu trúc argumentative essay.",
+              Wednesday:
+                "Viết bài: Describe a person who has had a big influence on your life.",
+              Thursday:
+                "Luyện viết câu phức với relative clauses + linking words.",
+              Friday:
+                "Viết bài: Do you prefer to live in a big city or countryside?",
+              Saturday:
+                "Tổng hợp từ vựng tuần 2 + viết bài compare and contrast ngắn.",
+              Sunday: "Viết bài tự chọn + peer review với bạn học hoặc AI.",
+            },
+            3: {
+              Monday:
+                "Viết bài: What are the advantages and disadvantages of social media?",
+              Tuesday:
+                "Học lại lỗi sai + focus vào transition words và paragraph structure.",
+              Wednesday: "Viết bài: Write about a memorable journey you took.",
+              Thursday:
+                "Luyện viết narrative essay với time expressions và descriptive language.",
+              Friday: "Viết bài: Should children learn how to cook at school?",
+              Saturday:
+                "Tổng hợp toàn bộ từ vựng 3 tuần + viết final essay 200 từ.",
+              Sunday:
+                "Self-assessment: đánh giá tiến bộ writing + lập kế hoạch cải thiện.",
+            },
+          },
+          topics: [
+            {
+              week: 1,
+              topics: [
+                "Describe your favorite place and explain why you like it",
+                "Do you think students should wear uniforms at school? Why or why not?",
+                "Write about a time when you helped someone. What happened?",
+              ],
+            },
+            {
+              week: 2,
+              topics: [
+                "Some people think watching TV is a waste of time. Do you agree or disagree?",
+                "Describe a person who has had a big influence on your life",
+                "Do you prefer to live in a big city or the countryside? Give reasons",
+              ],
+            },
+            {
+              week: 3,
+              topics: [
+                "What are the advantages and disadvantages of using social media?",
+                "Write about a memorable journey you took. Where did you go and what happened?",
+                "Should children learn how to cook at school? Why or why not?",
+              ],
+            },
+          ],
+        },
+        speaking: {
+          weeks: 3,
+          schedule: {
+            1: {
+              Monday:
+                "Học Unit 1 - Top Notch 3: Vocabulary + Conversation Model.",
+              Tuesday: "Luyện nói theo mẫu hội thoại + ghi âm lại.",
+              Wednesday:
+                "Học tiếp Unit 1 - Photo Story + luyện phản xạ bằng cách trả lời câu hỏi.",
+              Thursday:
+                "Xem video luyện nối âm trên kênh Speak English With Lucy + Shadowing.",
+              Friday:
+                "Luyện speaking topic: Talk about your weekend routine (1-2 phút).",
+              Saturday:
+                "Ghi âm so sánh 2 đoạn nói của mình trong tuần + rút kinh nghiệm.",
+              Sunday:
+                "Ôn toàn bộ cụm từ/câu mẫu từ Unit 1 + dùng lại trong tình huống tự tạo.",
+            },
+            2: {
+              Monday:
+                "Học Unit 2 - Top Notch 3: Vocabulary + Conversation patterns.",
+              Tuesday: "Luyện nói fluency với conversation starters + ghi âm.",
+              Wednesday: "Học Photo Story Unit 2 + role-play exercises.",
+              Thursday:
+                "Pronunciation focus: stress patterns + intonation practice.",
+              Friday:
+                "Speaking topic: Describe your ideal vacation (2-3 phút).",
+              Saturday: "Record and compare: pronunciation improvements.",
+              Sunday:
+                "Unit 2 review + create own dialogues using new vocabulary.",
+            },
+            3: {
+              Monday: "Học Unit 3 - Top Notch 3: Advanced conversation skills.",
+              Tuesday:
+                "Fluency practice: extended speaking without preparation.",
+              Wednesday: "Photo Story Unit 3 + spontaneous reaction practice.",
+              Thursday: "Connected speech: linking, reduction, and rhythm.",
+              Friday:
+                "Speaking topic: Talk about a life-changing experience (3-4 phút).",
+              Saturday: "Final recording: compare Week 1 vs Week 3 speaking.",
+              Sunday:
+                "3-week speaking review + set goals for continued improvement.",
+            },
+          },
+        },
+        listening: {
+          weeks: 3,
+          schedule: {
+            1: {
+              Monday:
+                'Nghe podcast VOA: "How exercise affects the brain" + ghi chú từ vựng.',
+              Tuesday: "Làm đề Listening B2 trên Test-English.com.",
+              Wednesday:
+                "Nghe lại đoạn khó từ ngày 2, chép chính tả 1 phút đầu.",
+              Thursday: "Shadowing 5 câu trong đoạn podcast đã nghe.",
+              Friday:
+                "Nghe video BBC Learning English: News Review + trả lời câu hỏi nội dung.",
+              Saturday: "Luyện lại toàn bộ từ/cụm từ đã nghe trong tuần.",
+              Sunday:
+                "Tự chọn 1 audio bạn thích + nghe không nhìn transcript, ghi lại ý chính.",
+            },
+            2: {
+              Monday: 'Nghe podcast BBC: "The Documentary" + vocabulary notes.',
+              Tuesday: "Làm đề Listening B2 trên British Council.",
+              Wednesday: "Dictation practice: transcribe 2 phút của podcast.",
+              Thursday: "Shadowing practice với news broadcast.",
+              Friday: "Nghe Luke's English Podcast + comprehension questions.",
+              Saturday: "Review và luyện lại difficult segments.",
+              Sunday:
+                "Free listening: choose TED Talk + summarize main points.",
+            },
+            3: {
+              Monday:
+                'Nghe podcast advanced level: "Science VS" + detailed notes.',
+              Tuesday: "Làm đề Listening B2 challenging level.",
+              Wednesday: "Intensive listening: transcribe 3 phút native speed.",
+              Thursday: "Shadowing với fast-paced news + pronunciation focus.",
+              Friday: "Nghe interview/debate + note-taking practice.",
+              Saturday: "Compare Week 1 vs Week 3 listening comprehension.",
+              Sunday:
+                "Final assessment: listen to unseen audio + complete summary.",
+            },
+          },
+        },
+      };
+
+      // State management
+      let currentSkill = "reading";
+      let currentWeek = 1;
+      let completedTasks = JSON.parse(
+        localStorage.getItem("completedTasks") || "{}"
+      );
+      let stats = JSON.parse(
+        localStorage.getItem("stats") ||
+          '{"completedDays": 0, "currentStreak": 0, "totalHours": 0}'
+      );
+
+      // Initialize the app
+      function init() {
+        setupEventListeners();
+        loadSchedule();
+        updateProgress();
+        updateStats();
+      }
+
+      function setupEventListeners() {
+        // Skill selector
+        document.querySelectorAll(".skill-card").forEach((card) => {
+          card.addEventListener("click", () => {
+            const skill = card.dataset.skill;
+            selectSkill(skill);
+          });
+        });
+
+        // Week selector
+        document.querySelectorAll(".week-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const week = parseInt(btn.dataset.week);
+            selectWeek(week);
+          });
+        });
+      }
+
+      function selectSkill(skill) {
+        currentSkill = skill;
+        currentWeek = 1;
+
+        // Update active skill card
+        document.querySelectorAll(".skill-card").forEach((card) => {
+          card.classList.remove("active");
+        });
+        document
+          .querySelector(`[data-skill="${skill}"]`)
+          .classList.add("active");
+
+        // Update week buttons
+        const weekSelector = document.querySelector(".week-selector");
+        weekSelector.innerHTML = "";
+        for (let i = 1; i <= learningPlan[skill].weeks; i++) {
+          const btn = document.createElement("button");
+          btn.className = `week-btn ${i === 1 ? "active" : ""}`;
+          btn.dataset.week = i;
+          btn.textContent = `Week ${i}`;
+          btn.addEventListener("click", () => selectWeek(i));
+          weekSelector.appendChild(btn);
+        }
+
+        loadSchedule();
+      }
+
+      function selectWeek(week) {
+        currentWeek = week;
+
+        // Update active week button
+        document.querySelectorAll(".week-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+        document.querySelector(`[data-week="${week}"]`).classList.add("active");
+
+        loadSchedule();
+      }
+
+      function loadSchedule() {
+        const schedule = learningPlan[currentSkill].schedule[currentWeek];
+        const scheduleContainer = document.getElementById("dailySchedule");
+
+        scheduleContainer.innerHTML = "";
+
+        Object.entries(schedule).forEach(([day, activity]) => {
+          const taskId = `${currentSkill}-${currentWeek}-${day}`;
+          const isCompleted = completedTasks[taskId] || false;
+          const isToday = isCurrentDay(day);
+
+          const dayCard = document.createElement("div");
+          dayCard.className = `day-card ${isToday ? "current-date" : ""}`;
+
+          dayCard.innerHTML = `
+                    <div class="day-header">
+                        <div class="day-name">${day}</div>
+                        <div class="checkbox-container">
+                            <div class="custom-checkbox ${
+                              isCompleted ? "checked" : ""
+                            }" 
+                                 onclick="toggleTask('${taskId}')"></div>
+                        </div>
+                    </div>
+                    <div class="day-activity">${activity}</div>
+                `;
+
+          scheduleContainer.appendChild(dayCard);
+        });
+
+        // Add writing topics if it's writing skill
+        if (currentSkill === "writing") {
+          addWritingTopics();
+        }
+
+        updateProgress();
+      }
+
+      function addWritingTopics() {
+        const topics = learningPlan.writing.topics.find(
+          (t) => t.week === currentWeek
+        );
+        if (topics) {
+          const scheduleContainer = document.getElementById("dailySchedule");
+
+          const topicsDiv = document.createElement("div");
+          topicsDiv.className = "writing-topics";
+          topicsDiv.innerHTML = `
+                    <h4>📝 Writing Topics for Week ${currentWeek}</h4>
+                    <div class="topic-list">
+                        ${topics.topics
+                          .map(
+                            (topic) => `
+                            <div class="topic-item">${topic}</div>
+                        `
+                          )
+                          .join("")}
+                    </div>
+                `;
+
+          scheduleContainer.appendChild(topicsDiv);
+        }
+      }
+
+      function toggleTask(taskId) {
+        completedTasks[taskId] = !completedTasks[taskId];
+        localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
+
+        // Update UI
+        const checkbox = document.querySelector(
+          `[onclick="toggleTask('${taskId}')"]`
+        );
+        checkbox.classList.toggle("checked");
+
+        // Update stats
+        updateStats();
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const totalTasks = 7; // 7 days per week
+        const completedCount = Object.keys(completedTasks).filter(
+          (key) =>
+            key.startsWith(`${currentSkill}-${currentWeek}-`) &&
+            completedTasks[key]
+        ).length;
+
+        const percentage = Math.round((completedCount / totalTasks) * 100);
+
+        document.getElementById("progressFill").style.width = `${percentage}%`;
+        document.getElementById(
+          "progressText"
+        ).textContent = `${percentage}% Complete`;
+      }
+
+      function updateStats() {
+        const totalCompleted =
+          Object.values(completedTasks).filter(Boolean).length;
+        const currentStreak = calculateStreak();
+        const totalHours = totalCompleted * 1.5; // Assuming 1.5 hours per task
+        const skillProgress = calculateSkillProgress();
+
+        document.getElementById("completedDays").textContent = totalCompleted;
+        document.getElementById("currentStreak").textContent = currentStreak;
+        document.getElementById("totalHours").textContent =
+          Math.round(totalHours);
+        document.getElementById(
+          "skillProgress"
+        ).textContent = `${skillProgress}%`;
+
+        // Save stats
+        stats = {
+          completedDays: totalCompleted,
+          currentStreak,
+          totalHours: Math.round(totalHours),
+        };
+        localStorage.setItem("stats", JSON.stringify(stats));
+      }
+
+      function calculateStreak() {
+        const today = new Date();
+        let streak = 0;
+
+        for (let i = 0; i < 30; i++) {
+          const checkDate = new Date(today);
+          checkDate.setDate(today.getDate() - i);
+          const dayName = checkDate.toLocaleDateString("en-US", {
+            weekday: "long",
+          });
+
+          const hasCompletedTask = Object.keys(completedTasks).some(
+            (key) => key.includes(dayName) && completedTasks[key]
+          );
+
+          if (hasCompletedTask) {
+            streak++;
+          } else if (i > 0) {
+            break;
+          }
+        }
+
+        return streak;
+      }
+
+      function calculateSkillProgress() {
+        const currentSkillTasks = Object.keys(completedTasks).filter(
+          (key) => key.startsWith(currentSkill) && completedTasks[key]
+        );
+        const totalSkillTasks = learningPlan[currentSkill].weeks * 7;
+
+        return Math.round((currentSkillTasks.length / totalSkillTasks) * 100);
+      }
+
+      function isCurrentDay(day) {
+        const today = new Date();
+        const currentDay = today.toLocaleDateString("en-US", {
+          weekday: "long",
+        });
+        return day === currentDay;
+      }
+
+      function resetProgress() {
+        if (
+          confirm(
+            "Are you sure you want to reset all progress? This action cannot be undone."
+          )
+        ) {
+          completedTasks = {};
+          localStorage.removeItem("completedTasks");
+          localStorage.removeItem("stats");
+          stats = { completedDays: 0, currentStreak: 0, totalHours: 0 };
+          loadSchedule();
+          updateStats();
+        }
+      }
+
+      function showAchievement(message) {
+        const achievement = document.createElement("div");
+        achievement.className = "achievement-badge";
+        achievement.textContent = message;
+        achievement.style.position = "fixed";
+        achievement.style.top = "20px";
+        achievement.style.right = "20px";
+        achievement.style.zIndex = "9999";
+
+        document.body.appendChild(achievement);
+
+        setTimeout(() => {
+          document.body.removeChild(achievement);
+        }, 3000);
+      }
+
+      function addDailyTip() {
+        const tips = [
+          "💡 Consistency is key! Even 15 minutes daily is better than 2 hours once a week.",
+          "🎯 Set specific goals for each study session to stay focused.",
+          "📝 Keep a vocabulary journal to track new words you learn.",
+          "🗣️ Practice speaking aloud, even when studying alone.",
+          "📚 Review previous lessons regularly to reinforce learning.",
+          "🎧 Listen to English content during commutes or breaks.",
+          "✍️ Write summaries of what you've learned to improve retention.",
+        ];
+
+        const randomTip = tips[Math.floor(Math.random() * tips.length)];
+        const tipElement = document.createElement("div");
+        tipElement.className = "daily-tip";
+        tipElement.innerHTML = `
+                <h5>💪 Daily Learning Tip</h5>
+                <p>${randomTip}</p>
+            `;
+
+        document.querySelector(".main-content").appendChild(tipElement);
+      }
+
+      function addMotivationalQuote() {
+        const quotes = [
+          "The limits of my language mean the limits of my world. - Ludwig Wittgenstein",
+          "Learning never exhausts the mind. - Leonardo da Vinci",
+          "A different language is a different vision of life. - Federico Fellini",
+          "Language is the road map of a culture. - Rita Mae Brown",
+          "The more languages you know, the more you are human. - Tomáš Garrigue Masaryk",
+        ];
+
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        const quoteElement = document.createElement("div");
+        quoteElement.className = "motivational-quote";
+        quoteElement.innerHTML = `
+                <h4>🌟 Inspiration</h4>
+                <p>"${randomQuote}"</p>
+            `;
+
+        document.querySelector(".main-content").appendChild(quoteElement);
+      }
+
+      function checkAchievements() {
+        const totalCompleted =
+          Object.values(completedTasks).filter(Boolean).length;
+        const streak = calculateStreak();
+
+        // Achievement for first task
+        if (totalCompleted === 1) {
+          showAchievement("🎉 First Step!");
+        }
+
+        // Achievement for completing a week
+        if (totalCompleted > 0 && totalCompleted % 7 === 0) {
+          showAchievement(`🏆 Week ${totalCompleted / 7} Complete!`);
+        }
+
+        // Achievement for streak
+        if (streak === 7) {
+          showAchievement("🔥 7-Day Streak!");
+        } else if (streak === 14) {
+          showAchievement("⚡ 2-Week Streak!");
+        } else if (streak === 21) {
+          showAchievement("💎 3-Week Streak!");
+        }
+      }
+
+      function exportProgress() {
+        const data = {
+          completedTasks,
+          stats,
+          exportDate: new Date().toISOString(),
+        };
+
+        const blob = new Blob([JSON.stringify(data, null, 2)], {
+          type: "application/json",
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "english-learning-progress.json";
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+
+      function importProgress() {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".json";
+
+        input.onchange = function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              try {
+                const data = JSON.parse(e.target.result);
+                completedTasks = data.completedTasks || {};
+                stats = data.stats || {
+                  completedDays: 0,
+                  currentStreak: 0,
+                  totalHours: 0,
+                };
+
+                localStorage.setItem(
+                  "completedTasks",
+                  JSON.stringify(completedTasks)
+                );
+                localStorage.setItem("stats", JSON.stringify(stats));
+
+                loadSchedule();
+                updateStats();
+
+                alert("Progress imported successfully!");
+              } catch (error) {
+                alert(
+                  "Error importing progress. Please check the file format."
+                );
+              }
+            };
+            reader.readAsText(file);
+          }
+        };
+
+        input.click();
+      }
+
+      // Add export/import buttons
+      function addExportImportButtons() {
+        const buttonContainer = document.createElement("div");
+        buttonContainer.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 30px;
+                display: flex;
+                gap: 10px;
+                z-index: 1000;
+            `;
+
+        const exportBtn = document.createElement("button");
+        exportBtn.textContent = "📤";
+        exportBtn.title = "Export Progress";
+        exportBtn.style.cssText = `
+                width: 50px;
+                height: 50px;
+                border: none;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                transition: all 0.3s ease;
+            `;
+        exportBtn.onclick = exportProgress;
+
+        const importBtn = document.createElement("button");
+        importBtn.textContent = "📥";
+        importBtn.title = "Import Progress";
+        importBtn.style.cssText = `
+                width: 50px;
+                height: 50px;
+                border: none;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                transition: all 0.3s ease;
+            `;
+        importBtn.onclick = importProgress;
+
+        buttonContainer.appendChild(exportBtn);
+        buttonContainer.appendChild(importBtn);
+        document.body.appendChild(buttonContainer);
+      }
+
+      // Initialize the app when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        init();
+        addDailyTip();
+        addMotivationalQuote();
+        addExportImportButtons();
+      });
+
+      // Override the original toggleTask function to include achievements
+      function toggleTask(taskId) {
+        completedTasks[taskId] = !completedTasks[taskId];
+
+        // Store in memory instead of localStorage
+        const checkbox = document.querySelector(
+          `[onclick="toggleTask('${taskId}')"]`
+        );
+        if (checkbox) {
+          checkbox.classList.toggle("checked");
+
+          // Add visual feedback
+          const dayCard = checkbox.closest(".day-card");
+          if (completedTasks[taskId]) {
+            dayCard.classList.add("completed-task");
+          } else {
+            dayCard.classList.remove("completed-task");
+          }
+        }
+
+        // Update stats and check for achievements
+        updateStats();
+        updateProgress();
+        checkAchievements();
+      }
+
+      // Add keyboard shortcuts
+      document.addEventListener("keydown", function (e) {
+        if (e.ctrlKey || e.metaKey) {
+          switch (e.key) {
+            case "1":
+              e.preventDefault();
+              selectSkill("reading");
+              break;
+            case "2":
+              e.preventDefault();
+              selectSkill("writing");
+              break;
+            case "3":
+              e.preventDefault();
+              selectSkill("speaking");
+              break;
+            case "4":
+              e.preventDefault();
+              selectSkill("listening");
+              break;
+            case "r":
+              e.preventDefault();
+              resetProgress();
+              break;
+            case "e":
+              e.preventDefault();
+              exportProgress();
+              break;
+          }
+        }
+      });
+
+      // Add touch gestures for mobile
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      document.addEventListener("touchstart", function (e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      });
+
+      document.addEventListener("touchend", function (e) {
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+
+        // Swipe left/right to change weeks
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+          if (deltaX > 0 && currentWeek > 1) {
+            selectWeek(currentWeek - 1);
+          } else if (
+            deltaX < 0 &&
+            currentWeek < learningPlan[currentSkill].weeks
+          ) {
+            selectWeek(currentWeek + 1);
+          }
+        }
+      });
+
+      // Add periodic auto-save reminder
+      setInterval(function () {
+        const totalTasks = Object.values(completedTasks).filter(Boolean).length;
+        if (totalTasks > 0 && totalTasks % 10 === 0) {
+          console.log("💾 Progress automatically tracked!");
+        }
+      }, 60000); // Check every minute
+    </script>
+  </body>
+</html>
