@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Learning Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        header {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: white;
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 50px;
+            width: 100%;
+        }
+
+        .main-button {
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        .vocab-button {
+            background: linear-gradient(145deg, #ff6b6b, #ee5a24);
+        }
+        
+        .topics-button {
+            background: linear-gradient(145deg, #26de81, #2bcbba);
+        }
+
+        .grammar-button {
+            background: linear-gradient(145deg, #4facfe, #00f2fe);
+        }
+
+        .main-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            min-height: 400px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .topic-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border-color: #764ba2;
+        }
+
+        .topic-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .topic-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .topic-grammar {
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .back-button {
+            background: linear-gradient(145deg, #8e44ad, #9b59b6);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(145deg, #9b59b6, #8e44ad);
+        }
+
+        .content-frame {
+            width: 100%;
+            height: 1000px;
+            border: none;
+            border-radius: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>English Learning Dashboard</h1>
+    </header>
+
+    <div class="container">
+        <div class="main-buttons">
+            <button class="main-button vocab-button" onclick="showSection('vocabulary')">Vocabulary</button>
+            <button class="main-button topics-button" onclick="showSection('topics')">Topics</button>
+            <button class="main-button grammar-button" onclick="showSection('grammar')">Grammar</button>
+        </div>
+
+        <button class="back-button" id="backButton" onclick="goBack()">← Back</button>
+
+        <div class="content-area" id="vocabularyContent">
+            <h2>Vocabulary Topics</h2>
+            <div class="topic-grid" id="vocabTopics">
+                <!-- Vocabulary topics will be loaded here -->
+            </div>
+        </div>
+
+        <div class="content-area" id="grammarContent">
+            <h2>Grammar Topics</h2>
+            <div class="topic-grid" id="grammarTopics">
+                <!-- Grammar topics will be loaded here -->
+            </div>
+        </div>
+
+        <div class="content-area" id="topicsContent">
+            <h2>Communication Topics</h2>
+            <div class="topic-grid" id="communicationTopics">
+                <!-- Communication topics will be loaded here -->
+            </div>
+        </div>
+
+        <iframe class="content-frame" id="contentFrame"></iframe>
+    </div>
+
+    <script>
+        // Function to handle messages from iframes
+        window.addEventListener('message', function(event) {
+            // Check if the message is a navigation request
+            if (event.data && event.data.action === 'navigate') {
+                openTopic(event.data.file);
+            }
+        });
+        
+        // Available vocabulary topics (based on files)
+        const vocabularyTopics = [
+            { name: 'Media', file: 'vocab_media.html', icon: '📺' },
+            { name: 'Entertainment', file: 'vocab_entertainment.html', icon: '🎭' },
+            { name: 'Daily Routine & Time', file: 'vocab_daily_routine.html', icon: '⏰' },
+            { name: 'Family & Personality', file: 'vocab_family_personality.html', icon: '👪' },
+            { name: 'Hobbies & Free Time', file: 'vocab_hobbies_free_time.html', icon: '🎮' },
+            { name: 'Food & Cooking', file: 'vocab_food_cooking.html', icon: '🍳' },
+            { name: 'Work & Jobs', file: 'vocab_work_jobs.html', icon: '💼' },
+            { name: 'Health & Feelings', file: 'vocab_health_feelings.html', icon: '🏥' },
+            { name: 'Travel & Culture', file: 'vocab_travel_culture.html', icon: '✈️' },
+            { name: 'Shopping, House, Tech', file: 'vocab_shopping_tech.html', icon: '🛒' }
+        ];
+        
+        // Available communication topics
+        const communicationTopics = [
+            { name: 'Daily Routine & Time', file: 'topic_daily_routine.html', icon: '⏰', grammar: '' },
+            { name: 'Family & Personality', file: 'topic_family_personality.html', icon: '👪', grammar: '' },
+            { name: 'Hobbies & Free Time', file: 'topic_hobbies_free_time.html', icon: '🎮', grammar: '' },
+            { name: 'Food & Cooking', file: 'topic_food_cooking.html', icon: '🍳', grammar: '' },
+            { name: 'Work & Jobs', file: 'topic_work_jobs.html', icon: '💼', grammar: '' },
+            { name: 'Health & Feelings', file: 'topic_health_feelings.html', icon: '🏥', grammar: '' },
+            { name: 'Travel & Culture', file: 'topic_travel_culture.html', icon: '✈️', grammar: '' },
+            { name: 'Shopping, House, Tech', file: 'topic_shopping_tech.html', icon: '🛒', grammar: '' }
+        ];
+
+        // Available grammar topics
+        const grammarTopics = [
+            // Tenses
+            { name: 'Present Simple', file: 'grammar_present_simple.html', icon: '⏰', grammar: 'Unit 8, p.28' },
+            { name: 'Present Continuous', file: 'grammar_present_continuous.html', icon: '⏳', grammar: 'Unit 1-2, p.14-16' },
+            { name: 'Past Simple', file: 'grammar_past_simple.html', icon: '🗓️', grammar: 'Unit 12-13, p.36-38' },
+            { name: 'Past Continuous', file: 'grammar_past_continuous.html', icon: '📆', grammar: 'Unit 14-15, p.40-42' },
+            { name: 'Present Perfect', file: 'grammar_present_perfect.html', icon: '🕒', grammar: 'Unit 10, p.32' },
+            { name: 'Past Perfect', file: 'grammar_past_perfect.html', icon: '🕰️', grammar: 'Unit 11, p.34' },
+            
+            // Conditionals
+            { name: 'Zero & First Conditional', file: 'grammar_zero_first_conditional.html', icon: '🧠', grammar: 'Unit 29, p.78' },
+            { name: 'Second Conditional', file: 'grammar_second_conditional.html', icon: '💡', grammar: 'Unit 30, p.80' },
+            
+            // Passive Voice
+            { name: 'Present Passive', file: 'grammar_present_passive.html', icon: '📓', grammar: 'Unit 23, p.66' },
+            { name: 'Past Passive', file: 'grammar_past_passive.html', icon: '📔', grammar: 'Unit 24, p.68' },
+            
+            // Reported Speech
+            { name: 'Reported Statements', file: 'grammar_reported_statements.html', icon: '🗣️', grammar: 'Unit 45, p.120' },
+            { name: 'Reported Questions', file: 'grammar_reported_questions.html', icon: '❓', grammar: 'Unit 46, p.122' },
+            
+            // Relative Clauses
+            { name: 'Relative Pronouns', file: 'grammar_relative_pronouns.html', icon: '🔍', grammar: 'Unit 32, p.88' },
+            { name: 'Relative Clauses', file: 'grammar_relative_clause.html', icon: '🔗', grammar: 'Unit 33, p.90' },
+            
+            // Modal Verbs
+            { name: 'Can & Could', file: 'grammar_can_could.html', icon: '💪', grammar: 'Unit 25, p.70' },
+            { name: 'Must & Have to', file: 'grammar_must_have_to.html', icon: '❗', grammar: 'Unit 26, p.72' },
+            { name: 'Should & Ought to', file: 'grammar_should_ought_to.html', icon: '💬', grammar: 'Unit 27, p.74' },
+            { name: 'May & Might', file: 'grammar_may_might.html', icon: '🤔', grammar: 'Unit 28, p.76' },
+            
+            // Comparisons
+            { name: 'Comparatives', file: 'grammar_comparatives.html', icon: '📋', grammar: 'Unit 42, p.112' },
+            { name: 'Superlatives', file: 'grammar_superlatives.html', icon: '🏆', grammar: 'Unit 43, p.114' },
+            
+            // Verb Patterns
+            { name: 'Gerunds & Infinitives', file: 'grammar_gerunds_infinitives.html', icon: '📝', grammar: 'Unit 69, p.182' },
+            { name: 'Verb + ing/to', file: 'grammar_verb_patterns.html', icon: '📚', grammar: 'Unit 54-55, p.144-146' },
+            
+            // Prepositions
+            { name: 'Adjective + Preposition', file: 'grammar_adj_prep.html', icon: '📒', grammar: 'Unit 66, p.176' },
+            
+            // Other
+            { name: 'Every/Each', file: 'grammar_every_each.html', icon: '📅', grammar: 'Unit 56, p.148' },
+            { name: 'Imperatives', file: 'grammar_imperatives.html', icon: '💭', grammar: 'Unit 33, p.90' },
+            { name: 'Some/Any', file: 'grammar_some_any.html', icon: '🔎', grammar: 'Unit 85-86, p.224-226' },
+            { name: 'There is/are', file: 'grammar_there_is_are.html', icon: '📍', grammar: 'Unit 83, p.220' },
+            { name: 'Word formation', file: 'grammar_word_formation.html', icon: '📜', grammar: 'Unit 136-137, p.356-358' }
+        ];
+
+        // Current view state
+        let currentView = 'main'; // main, vocabulary, grammar, topic
+        let selectedTopic = null;
+
+        // Initialize the page
+        window.onload = function() {
+            loadTopics();
+        };
+
+        // Load topics into their respective sections
+        function loadTopics() {
+            const vocabContainer = document.getElementById('vocabTopics');
+            vocabContainer.innerHTML = '';
+            
+            vocabularyTopics.forEach(topic => {
+                const topicCard = document.createElement('div');
+                topicCard.className = 'topic-card';
+                topicCard.onclick = function() { openTopic(topic.file); };
+                
+                topicCard.innerHTML = `
+                    <div class="topic-icon">${topic.icon}</div>
+                    <div class="topic-title">${topic.name}</div>
+                `;
+                
+                vocabContainer.appendChild(topicCard);
+            });
+
+            // Load communication topics
+            const topicsContainer = document.getElementById('communicationTopics');
+            topicsContainer.innerHTML = '';
+            
+            communicationTopics.forEach(topic => {
+                const topicCard = document.createElement('div');
+                topicCard.className = 'topic-card';
+                topicCard.onclick = function() { openTopic(topic.file); };
+                
+                topicCard.innerHTML = `
+                    <div class="topic-icon">${topic.icon}</div>
+                    <div class="topic-title">${topic.name}</div>
+                    ${topic.grammar ? `<div class="topic-grammar">${topic.grammar}</div>` : ''}
+                `;
+                
+                topicsContainer.appendChild(topicCard);
+            });
+
+            // Load grammar topics
+            const grammarContainer = document.getElementById('grammarTopics');
+            grammarContainer.innerHTML = '';
+            
+            grammarTopics.forEach(topic => {
+                const topicCard = document.createElement('div');
+                topicCard.className = 'topic-card';
+                topicCard.onclick = function() { openTopic(topic.file); };
+                
+                topicCard.innerHTML = `
+                    <div class="topic-icon">${topic.icon}</div>
+                    <div class="topic-title">${topic.name}</div>
+                    ${topic.grammar ? `<div class="topic-grammar">${topic.grammar}</div>` : ''}
+                `;
+                
+                grammarContainer.appendChild(topicCard);
+            });
+        }
+
+        // Show a specific section (vocabulary, topics, or grammar)
+        function showSection(section) {
+            // Hide all content areas
+            document.querySelectorAll('.content-area').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            document.getElementById('contentFrame').style.display = 'none';
+            
+            // Show the selected section
+            if (section === 'vocabulary') {
+                document.getElementById('vocabularyContent').style.display = 'block';
+                currentView = 'vocabulary';
+            } else if (section === 'topics') {
+                document.getElementById('topicsContent').style.display = 'block';
+                currentView = 'topics';
+            } else if (section === 'grammar') {
+                document.getElementById('grammarContent').style.display = 'block';
+                currentView = 'grammar';
+            }
+            
+            // Show back button if not on main view
+            document.getElementById('backButton').style.display = 'block';
+        }
+
+        // Open a specific topic
+        function openTopic(file) {
+            // Hide all content areas
+            document.querySelectorAll('.content-area').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Store current section as referrer for vocabulary pages
+            if (file.indexOf('vocab_') !== -1) {
+                localStorage.setItem('vocab_referrer', 'vocabulary');
+            } else if (file.indexOf('topic_') !== -1) {
+                localStorage.setItem('vocab_referrer', 'topics');
+            } else if (file.indexOf('grammar_') !== -1) {
+                localStorage.setItem('vocab_referrer', 'grammar');
+            }
+            
+            // Show the content frame with the selected topic
+            const contentFrame = document.getElementById('contentFrame');
+            contentFrame.src = file;
+            contentFrame.style.display = 'block';
+            
+            selectedTopic = file;
+            currentView = 'topic';
+            
+            // Show back button
+            document.getElementById('backButton').style.display = 'block';
+        }
+
+        // Go back to previous view
+        function goBack() {
+            if (currentView === 'topic') {
+                // If viewing a topic, go back to the section (vocabulary, topics, or grammar)
+                let section = 'grammar'; // Default
+                
+                // Debug the selected topic
+                console.log('Selected topic:', selectedTopic);
+                
+                // Check which section to return to based on the file name pattern
+                if (selectedTopic.indexOf('vocab_') !== -1) {
+                    section = 'vocabulary';
+                } else if (selectedTopic.indexOf('topic_') !== -1) {
+                    section = 'topics';
+                } else if (selectedTopic.indexOf('grammar_') !== -1) {
+                    section = 'grammar';
+                }
+                
+                console.log('Returning to section:', section);
+                showSection(section);
+            } else {
+                // If viewing a section, go back to main view
+                document.querySelectorAll('.content-area').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                document.getElementById('contentFrame').style.display = 'none';
+                document.getElementById('backButton').style.display = 'none';
+                
+                currentView = 'main';
+            }
+        }
+    </script>
+</body>
+</html>
