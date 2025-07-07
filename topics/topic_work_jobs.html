@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work & Jobs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/grammar.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(145deg, rgba(38, 222, 129, 0.7), rgba(43, 203, 186, 0.7));
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .topic-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        .topic-section {
+            margin-bottom: 40px;
+        }
+        
+        h2 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        
+        .vocabulary-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .vocab-item {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .vocab-word {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        .vocab-meaning {
+            color: #555;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
+        .vocab-example {
+            color: #666;
+            margin-top: 8px;
+            padding-left: 10px;
+            border-left: 2px solid #ddd;
+        }
+        
+        .conversation-example {
+            background-color: #f0f7fb;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .speaker {
+            font-weight: bold;
+            color: #2980b9;
+        }
+        
+        .grammar-point {
+            background-color: #eaf2f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .grammar-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        .practice-section {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+        
+        .practice-item {
+            margin-bottom: 15px;
+        }
+        
+        /* Progress Tracking Styles */
+        .progress-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .progress-intro {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .progress-section {
+            margin-bottom: 25px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f5f5f5;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .progress-header h3 {
+            margin: 0;
+            color: #333;
+        }
+        
+        .progress-status {
+            display: flex;
+            align-items: center;
+        }
+        
+        .progress-content {
+            padding: 20px;
+        }
+        
+        .progress-checkbox {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkbox-label {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            user-select: none;
+            display: inline-block;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .checkbox-label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 22px;
+            height: 22px;
+            border: 2px solid #3498db;
+            border-radius: 50%;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-checkbox:checked + .checkbox-label:before {
+            background-color: #3498db;
+        }
+        
+        .progress-checkbox:checked + .checkbox-label:after {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 4px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .checkbox-label {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .progress-input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .edit-note-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            color: #3498db;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 20px;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .edit-note-btn:hover {
+            color: #2980b9;
+            transform: scale(1.2);
+        }
+        
+        .edit-note-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .vocab-dropdown {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .vocab-select {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .vocab-view-btn, .add-grammar-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 20px;
+        }
+        
+        .vocab-view-btn {
+            background-color: #2ecc71;
+        }
+        
+        .vocab-view-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .add-grammar-btn {
+            background-color: #3498db;
+        }
+        
+        .add-grammar-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .grammar-selection {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .grammar-select {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .add-grammar-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0 15px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-grammar-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .grammar-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .grammar-tag {
+            display: flex;
+            align-items: center;
+            background-color: #e1f5fe;
+            border: 1px solid #81d4fa;
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .grammar-tag:hover {
+            background-color: #b3e5fc;
+        }
+        
+        .grammar-tag-text {
+            margin-right: 8px;
+        }
+        
+        .grammar-tag-remove {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            background-color: #81d4fa;
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .grammar-tag-remove:hover {
+            background-color: #4fc3f7;
+        }
+        
+        .grammar-tag-active {
+            background-color: #b3e5fc;
+            border-color: #4fc3f7;
+            box-shadow: 0 0 5px rgba(79, 195, 247, 0.5);
+        }
+        
+        .save-button {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+        
+        .save-button:hover {
+            background-color: #27ae60;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 10px;
+            width: 60%;
+            max-width: 600px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #333;
+        }
+        
+        #noteText {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+            margin-top: 15px;
+            resize: vertical;
+        }
+        
+        .grammar-select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            flex-grow: 1;
+            margin-right: 5px;
+            height: auto;
+            min-height: 100px;
+        }
+        
+        .grammar-select option {
+            padding: 8px;
+            margin-bottom: 2px;
+            border-radius: 3px;
+        }
+        
+        /* Select2 custom styling */
+        .select2-container--default .select2-selection--multiple {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 38px;
+        }
+        
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #e9ecef;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 3px 8px;
+            margin: 3px;
+        }
+        
+        .select2-container--default .select2-results__option--selected {
+            background-color: #e9ecef;
+        }
+        
+        .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .select2-dropdown {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .select2-container--open .select2-dropdown {
+            margin-top: 3px;
+        }
+        
+        .select2-container .select2-search--inline .select2-search__field {
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal for notes -->
+    <div id="noteModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Edit Note</h2>
+            <textarea id="noteText" rows="10" cols="50"></textarea>
+            <button id="saveNote" class="save-button">Save Note</button>
+        </div>
+    </div>
+    
+    <div class="topic-container">
+        <h1>Work & Jobs</h1>
+        
+
+        
+
+        
+
+        
+
+    </div>
+    
+    <div class="progress-container">
+        <h2>Progress Tracking</h2>
+        <p class="progress-intro">Track your learning progress for this topic. Use the vocabulary and grammar buttons to access related resources.</p>
+        
+        <div class="progress-section">
+            <div class="progress-header">
+                <h3>Reading</h3>
+                <div class="progress-status">
+                    <label>
+                        <input type="checkbox" id="readingDone" class="progress-checkbox"> 
+                        <span class="checkbox-label"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="progress-content">
+                <div class="input-group">
+                    <input type="text" id="readingLink" placeholder="Add a link or note..." class="progress-input">
+                    <button class="edit-note-btn" data-section="reading" title="Edit Note">✏️</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-section">
+            <div class="progress-header">
+                <h3>Grammar</h3>
+                <div class="progress-status">
+                    <label>
+                        <input type="checkbox" id="grammarDone" class="progress-checkbox"> 
+                        <span class="checkbox-label"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="progress-content">
+                <div class="grammar-selection">
+                    <select id="grammarMultiSelect" class="form-select select2-multi" multiple="multiple" style="width: 100%">
+                        <option value="grammar_present_simple.html">Present Simple (Unit 8, p.28)</option>
+                        <option value="grammar_present_continuous.html">Present Continuous (Unit 1-2, p.14-16)</option>
+                        <option value="grammar_past_simple.html">Past Simple (Unit 3, p.18)</option>
+                        <option value="grammar_future_simple.html">Future Simple (Unit 5, p.22)</option>
+                        <option value="grammar_relative_clause.html">Relative Clauses (Unit 10, p.34)</option>
+                    </select>
+                </div>
+                <div id="selectedGrammarTags" class="grammar-tags-container">
+                    <!-- Selected grammar topics will appear here as tags -->
+                </div>
+                <div class="input-group">
+                    <input type="text" id="grammarNote" placeholder="Add a note..." class="progress-input">
+                    <button class="edit-note-btn" data-section="grammar" title="Edit Note">✏️</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-section">
+            <div class="progress-header">
+                <h3>Vocabulary</h3>
+                <div class="progress-status">
+                    <label>
+                        <input type="checkbox" id="vocabDone" class="progress-checkbox"> 
+                        <span class="checkbox-label"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="progress-content">
+                <div class="vocab-dropdown">
+                    <select id="vocabList" class="vocab-select">
+                        <option value="" disabled selected>Select vocabulary topic...</option>
+                        <option value="vocab_daily_routine.html">Daily Routine & Time</option>
+                        <option value="vocab_media.html">Media</option>
+                        <option value="vocab_entertainment.html">Entertainment</option>
+                    </select>
+                    <button id="goToVocabView" class="vocab-view-btn" title="Go to Vocabulary View">📚</button>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="vocabularyNote" placeholder="Add a note..." class="progress-input">
+                    <button class="edit-note-btn" data-section="vocabulary" title="Edit Note">✏️</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-section">
+            <div class="progress-header">
+                <h3>Writing</h3>
+                <div class="progress-status">
+                    <label>
+                        <input type="checkbox" id="writingDone" class="progress-checkbox"> 
+                        <span class="checkbox-label"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="progress-content">
+                <div class="input-group">
+                    <input type="text" id="writingNote" placeholder="Add a note..." class="progress-input">
+                    <button class="edit-note-btn" data-section="writing" title="Edit Note">✏️</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-section">
+            <div class="progress-header">
+                <h3>Shadowing</h3>
+                <div class="progress-status">
+                    <label>
+                        <input type="checkbox" id="shadowingDone" class="progress-checkbox"> 
+                        <span class="checkbox-label"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="progress-content">
+                <div class="input-group">
+                    <input type="text" id="shadowingNote" placeholder="Add a note..." class="progress-input">
+                    <button class="edit-note-btn" data-section="shadowing" title="Edit Note">✏️</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-section">
+            <div class="progress-header">
+                <h3>Listening</h3>
+                <div class="progress-status">
+                    <label>
+                        <input type="checkbox" id="listeningDone" class="progress-checkbox"> 
+                        <span class="checkbox-label"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="progress-content">
+                <div class="input-group">
+                    <input type="text" id="listeningLink" placeholder="Add a link or note..." class="progress-input">
+                    <button class="edit-note-btn" data-section="listening" title="Edit Note">✏️</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="topic-container">
+        <h2>Activity: Describe Your Dream Job</h2>
+        <p>Write 5-8 sentences describing your dream job or career aspirations using appropriate vocabulary and tenses.</p>
+    </div>
+    
+    <script>
+        // Store notes in localStorage
+        const notes = {
+            reading: localStorage.getItem('work_jobs_reading_note') || '',
+            grammar: localStorage.getItem('work_jobs_grammar_note') || '',
+            writing: localStorage.getItem('work_jobs_writing_note') || '',
+            listening: localStorage.getItem('work_jobs_listening_note') || ''
+        };
+        
+        // Load saved progress from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load checkbox states
+            document.getElementById('readingDone').checked = localStorage.getItem('work_jobs_reading_done') === 'true';
+            document.getElementById('grammarDone').checked = localStorage.getItem('work_jobs_grammar_done') === 'true';
+            document.getElementById('vocabDone').checked = localStorage.getItem('work_jobs_vocab_done') === 'true';
+            document.getElementById('writingDone').checked = localStorage.getItem('work_jobs_writing_done') === 'true';
+            document.getElementById('shadowingDone').checked = localStorage.getItem('work_jobs_shadowing_done') === 'true';
+            document.getElementById('listeningDone').checked = localStorage.getItem('work_jobs_listening_done') === 'true';
+            
+            // Load input values
+            document.getElementById('readingLink').value = localStorage.getItem('work_jobs_reading_link') || '';
+            document.getElementById('grammarNote').value = localStorage.getItem('work_jobs_grammar_input') || '';
+            document.getElementById('writingNote').value = localStorage.getItem('work_jobs_writing_input') || '';
+            document.getElementById('listeningLink').value = localStorage.getItem('work_jobs_listening_link') || '';
+        });
+        
+        // Save checkbox states
+        const checkboxes = document.querySelectorAll('.progress-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const id = this.id;
+                localStorage.setItem('work_jobs_' + id, this.checked);
+            });
+        });
+        
+        // Save input values
+        const inputs = document.querySelectorAll('.progress-input');
+        inputs.forEach(input => {
+            input.addEventListener('change', function() {
+                const id = this.id;
+                localStorage.setItem('work_jobs_' + id, this.value);
+            });
+        });
+        
+        // Modal functionality
+        const modal = document.getElementById('noteModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const noteText = document.getElementById('noteText');
+        const saveNote = document.getElementById('saveNote');
+        const closeBtn = document.querySelector('.close');
+        let currentSection = '';
+        
+        // Open modal when Edit Note button is clicked
+        const editButtons = document.querySelectorAll('.edit-note-btn');
+        editButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                currentSection = this.getAttribute('data-section');
+                modalTitle.textContent = 'Edit ' + currentSection.charAt(0).toUpperCase() + currentSection.slice(1) + ' Note';
+                noteText.value = notes[currentSection];
+                modal.style.display = 'block';
+            });
+        });
+        
+        // Close modal
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Save note
+        saveNote.addEventListener('click', function() {
+            notes[currentSection] = noteText.value;
+            localStorage.setItem('work_jobs_' + currentSection + '_note', noteText.value);
+            modal.style.display = 'none';
+        });
+        
+        // Go to vocabulary view button click handler
+        document.getElementById('goToVocabView').addEventListener('click', function() {
+            const vocabSelect = document.getElementById('vocabList');
+            const selectedVocab = vocabSelect.value;
+            
+            if (selectedVocab) {
+                // Save selected vocabulary to localStorage
+                localStorage.setItem('work_jobs_selected_vocab', selectedVocab);
+                
+                // Save the current page as referrer for back button functionality
+                localStorage.setItem('vocab_referrer', 'topic_daily_routine.html');
+                
+                window.parent.postMessage({
+                    action: 'navigate',
+                    file: selectedVocab
+                }, '*');
+            }
+        });
+        
+        // Save vocabulary selection when changed
+        document.getElementById('vocabList').addEventListener('change', function() {
+            localStorage.setItem('work_jobs_selected_vocab', this.value);
+            
+            // Also save the text of the selected option
+            const selectedOption = this.options[this.selectedIndex];
+            if (selectedOption) {
+                localStorage.setItem('work_jobs_selected_vocab_text', selectedOption.text);
+            }
+        });
+        
+        // Grammar tags management
+        const grammarSelect = document.getElementById('grammarList');
+        
+        // Load saved grammar topics
+        function loadSavedGrammarTopics() {
+            const selectedGrammarTags = document.getElementById('selectedGrammarTags');
+            selectedGrammarTags.innerHTML = ''; // Clear existing tags
+            
+            // Check if we have saved grammar topics
+            const savedGrammar = localStorage.getItem('work_jobs_selected_grammar');
+            
+            if (savedGrammar) {
+                try {
+                    const grammarValues = JSON.parse(savedGrammar);
+                    if (grammarValues && grammarValues.length > 0) {
+                        // Create tags for each saved grammar topic
+                        grammarValues.forEach(value => {
+                            // Find the option text for this value
+                            const option = Array.from(grammarSelect.options).find(opt => opt.value === value);
+                            if (option) {
+                                createGrammarTag(value, option.text);
+                            }
+                        });
+                    }
+                } catch (e) {
+                    console.error('Error loading saved grammar topics:', e);
+                }
+            }
+        }
+        
+        // Create a grammar tag element
+        function createGrammarTag(value, text) {
+            const tag = document.createElement('div');
+            tag.className = 'grammar-tag';
+            tag.dataset.value = value;
+            
+            const tagText = document.createElement('span');
+            tagText.className = 'grammar-tag-text';
+            tagText.textContent = text.split(' (')[0]; // Just show the grammar name, not the unit info
+            
+            const removeBtn = document.createElement('span');
+            removeBtn.className = 'grammar-tag-remove';
+            removeBtn.textContent = '×';
+            removeBtn.title = 'Remove';
+            
+            tag.appendChild(tagText);
+            tag.appendChild(removeBtn);
+            
+            // Click on tag to navigate to that grammar topic
+            tagText.addEventListener('click', function() {
+                // Highlight this tag as active
+                document.querySelectorAll('.grammar-tag').forEach(t => {
+                    t.classList.remove('grammar-tag-active');
+                });
+                tag.classList.add('grammar-tag-active');
+                
+                // Navigate to the grammar topic
+                window.parent.postMessage({
+                    action: 'navigate',
+                    file: value
+                }, '*');
+            });
+            
+            // Click on remove button to delete the tag
+            removeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                tag.remove();
+                saveGrammarTopics();
+            });
+            
+            selectedGrammarTags.appendChild(tag);
+        }
+        
+        // Save the current grammar topics to localStorage
+        function saveGrammarTopics() {
+            const values = $('#grammarMultiSelect').val() || [];
+            localStorage.setItem('work_jobs_selected_grammar', JSON.stringify(values));
+        }
+        
+        // No need for Apply button handler - Bootstrap-select handles changes automatically
+        
+        // Initialize page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved vocabulary selection from localStorage
+            const vocabSelect = document.getElementById('vocabList');
+            const savedVocabTopic = localStorage.getItem('work_jobs_selected_vocab');
+            
+            if (savedVocabTopic) {
+                const savedOption = Array.from(vocabSelect.options).find(option => option.value === savedVocabTopic);
+                if (savedOption) {
+                    savedOption.selected = true;
+                }
+            } else {
+                // Auto-select the Daily Routine vocabulary topic by default
+                const dailyRoutineOption = Array.from(vocabSelect.options).find(option => option.value === 'vocab_daily_routine.html');
+                if (dailyRoutineOption) {
+                    dailyRoutineOption.selected = true;
+                }
+            }
+            
+            // Load progress from localStorage
+            loadProgressFromLocalStorage();
+        });
+        
+        // Load progress data from localStorage
+        function loadProgressFromLocalStorage() {
+            const sections = ['reading', 'grammar', 'vocabulary', 'writing', 'shadowing', 'listening'];
+            
+            sections.forEach(section => {
+                const checkboxId = section + 'Done';
+                const noteId = section + 'Note';
+                
+                const isDone = localStorage.getItem('work_jobs_' + checkboxId) === 'true';
+                const note = localStorage.getItem('work_jobs_' + noteId) || '';
+                
+                const checkbox = document.getElementById(checkboxId);
+                const noteInput = document.getElementById(noteId);
+                
+                if (checkbox) checkbox.checked = isDone;
+                if (noteInput) noteInput.value = note;
+            });
+        }
+
+    // Load jQuery and Select2 scripts
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load jQuery first
+        const jqueryScript = document.createElement('script');
+        jqueryScript.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+        jqueryScript.onload = function() {
+            // Then load Select2
+            const selectScript = document.createElement('script');
+            selectScript.src = 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js';
+            selectScript.onload = function() {
+                // Initialize Select2
+                $(document).ready(function() {
+                    $('#grammarMultiSelect').select2({
+                        placeholder: 'Select grammar topics...',
+                        allowClear: true,
+                        width: '100%',
+                        closeOnSelect: false,
+                        dropdownCssClass: 'select2-dropdown-large'
+                    });
+                    
+                    // Load saved grammar topics
+                    const savedGrammar = localStorage.getItem('work_jobs_selected_grammar');
+                    if (savedGrammar) {
+                        try {
+                            const grammarValues = JSON.parse(savedGrammar);
+                            $('#grammarMultiSelect').val(grammarValues).trigger('change');
+                            updateGrammarTags();
+                        } catch (e) {
+                            console.error('Error loading saved grammar topics:', e);
+                        }
+                    }
+                    
+                    // Handle selection changes
+                    $('#grammarMultiSelect').on('change', function() {
+                        updateGrammarTags();
+                        saveGrammarTopics();
+                    });
+                });
+            };
+            document.head.appendChild(selectScript);
+        };
+        document.head.appendChild(jqueryScript);
+    });
+    
+    // Update grammar tags based on multi-select
+    function updateGrammarTags() {
+        const selectedGrammarTags = document.getElementById('selectedGrammarTags');
+        selectedGrammarTags.innerHTML = ''; // Clear existing tags
+        
+        const select = $('#grammarMultiSelect');
+        const selectedOptions = select.find('option:selected');
+        
+        selectedOptions.each(function() {
+            const value = $(this).val();
+            const text = $(this).text().split(' (')[0]; // Just show the grammar name, not the unit info
+            createGrammarTag(value, text);
+        });
+    }
+</script>
+</body>
+</html>
