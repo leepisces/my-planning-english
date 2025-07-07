@@ -1,0 +1,355 @@
+/* Vocabulary Mind Map Styles */
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+  min-height: 100vh;
+  overflow-x: auto;
+}
+
+.mindmap-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.mindmap {
+  position: relative;
+  width: 1200px;
+  height: 800px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  overflow: visible;
+}
+
+.center-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 100px;
+  background: linear-gradient(145deg, #ff6b6b, #ee5a24);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  line-height: 1.4;
+}
+
+.branch {
+  position: absolute;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid;
+  color: white;
+  backdrop-filter: blur(5px);
+}
+
+.branch:hover {
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.branch-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.branch-content {
+  font-size: 12px;
+  line-height: 1.4;
+  color: white;
+}
+
+.branch-content .item {
+  margin: 3px 0;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: white;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.branch-content .item:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.branch-content .contrast {
+  font-weight: bold;
+}
+
+.branch-content .phrasal {
+  font-weight: bold;
+}
+
+.branch-content .pattern {
+  font-weight: bold;
+}
+
+.branch-content .formation {
+  font-weight: bold;
+}
+
+/* Branch positions */
+.branch-1 {
+  top: 5%;
+  left: 5%;
+  width: 320px;
+  border-color: #e74c3c;
+  background: #e74c3c;
+}
+
+.branch-2 {
+  top: 5%;
+  right: 5%;
+  width: 320px;
+  border-color: #3498db;
+  background: #3498db;
+}
+
+.branch-3 {
+  top: 40%;
+  left: 2%;
+  width: 300px;
+  border-color: #f39c12;
+  background: #f39c12;
+}
+
+.branch-4 {
+  top: 40%;
+  right: 2%;
+  width: 300px;
+  border-color: #27ae60;
+  background: #27ae60;
+}
+
+.branch-5 {
+  bottom: 5%;
+  left: 5%;
+  width: 320px;
+  border-color: #9b59b6;
+  background: #9b59b6;
+}
+
+.branch-6 {
+  bottom: 5%;
+  right: 5%;
+  width: 320px;
+  border-color: #1abc9c;
+  background: #1abc9c;
+}
+
+/* Connection lines */
+.line {
+  position: absolute;
+  background: white;
+  z-index: 1;
+}
+
+.line-1 {
+  top: 45%;
+  left: 30%;
+  width: 150px;
+  height: 3px;
+  transform: rotate(-20deg);
+}
+
+.line-2 {
+  top: 45%;
+  right: 30%;
+  width: 150px;
+  height: 3px;
+  transform: rotate(20deg);
+}
+
+.line-3 {
+  top: 55%;
+  left: 30%;
+  width: 150px;
+  height: 3px;
+  transform: rotate(20deg);
+}
+
+.line-4 {
+  top: 55%;
+  right: 30%;
+  width: 150px;
+  height: 3px;
+  transform: rotate(-20deg);
+}
+
+.line-5 {
+  bottom: 45%;
+  left: 30%;
+  width: 150px;
+  height: 3px;
+  transform: rotate(-20deg);
+}
+
+.line-6 {
+  bottom: 45%;
+  right: 30%;
+  width: 150px;
+  height: 3px;
+  transform: rotate(20deg);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #2c3e50;
+  background-color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.legend-color {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  margin-right: 8px;
+}
+
+.tips {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-size: 14px;
+  color: #2c3e50;
+  width: auto;
+  white-space: nowrap;
+}
+
+.tips {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-size: 14px;
+  color: #2c3e50;
+  width: auto;
+  white-space: nowrap;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: linear-gradient(145deg, #8e44ad, #9b59b6);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: linear-gradient(145deg, #9b59b6, #8e44ad);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.back-button:before {
+  content: '←';
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .mindmap {
+    width: 100%;
+    height: auto;
+    min-height: 800px;
+  }
+  
+  /* Adjust branch positions for smaller screens */
+  .branch {
+    position: relative;
+    margin: 20px auto;
+    width: 90% !important;
+    max-width: 300px;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+  }
+  
+  .center-node {
+    position: relative;
+    margin: 20px auto;
+    transform: none;
+    left: auto;
+    top: auto;
+  }
+  
+  .line {
+    display: none;
+  }
+  
+  .mindmap-container {
+    padding: 10px;
+  }
+}

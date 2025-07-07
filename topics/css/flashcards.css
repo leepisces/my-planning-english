@@ -1,0 +1,143 @@
+/* Flashcards CSS */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.flashcards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.flashcard {
+  width: 300px;
+  height: 200px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.flashcard-front {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  background-color: #3498db; /* Default color, will be overridden by JS */
+}
+
+.flashcard-back {
+  background-color: white;
+  color: #333;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  padding: 15px;
+  border-left: 5px solid; /* Border color will be set by JS */
+}
+
+.word-type {
+  font-style: italic;
+  color: #777;
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+
+.word-meaning {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.word-example {
+  font-size: 14px;
+  font-style: italic;
+  color: #555;
+}
+
+/* Phrasal Verb Styling - New approach */
+.phrasal-verb-front {
+  background-color: #fff1f0 !important;
+  border: 2px solid #e74c3c !important;
+  position: relative;
+}
+
+.pv-label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.pv-text {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  color: #e74c3c;
+}
+
+.phrasal-verb-back {
+  border-left: 5px dashed #e74c3c !important;
+}
+
+.phrasal-verb-back .word-type {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
