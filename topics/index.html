@@ -74,6 +74,10 @@
         .grammar-button {
             background: linear-gradient(145deg, #4facfe, #00f2fe);
         }
+        
+        .inconsistent-button {
+            background: linear-gradient(145deg, #fd79a8, #e84393);
+        }
 
         .main-button:hover {
             transform: translateY(-5px);
@@ -167,6 +171,7 @@
             <button class="main-button vocab-button" onclick="showSection('vocabulary')">Vocabulary</button>
             <button class="main-button topics-button" onclick="showSection('topics')">Topics</button>
             <button class="main-button grammar-button" onclick="showSection('grammar')">Grammar</button>
+            <button class="main-button inconsistent-button" onclick="showSection('inconsistent')">Inconsistent Vocabs</button>
         </div>
 
         <button class="back-button" id="backButton" onclick="goBack()">← Back</button>
@@ -192,6 +197,13 @@
             </div>
         </div>
 
+        <div class="content-area" id="inconsistentContent">
+            <h2>Inconsistent Vocabs</h2>
+            <div class="topic-grid" id="inconsistentTopics">
+                <!-- Inconsistent vocabs topics will be loaded here -->
+            </div>
+        </div>
+
         <iframe class="content-frame" id="contentFrame"></iframe>
     </div>
 
@@ -203,6 +215,16 @@
                 openTopic(event.data.file);
             }
         });
+        
+        // Available inconsistent vocabs topics
+        const inconsistentTopics = [
+            { name: 'Monday', file: 'inconsistent_monday_vocab.html', icon: '📝' },
+            { name: 'Tuesday', file: 'inconsistent_tuesday_vocab.html', icon: '📝' },
+            { name: 'Wednesday', file: 'inconsistent_wednesday_vocab.html', icon: '📝' },
+            { name: 'Thursday', file: 'inconsistent_thursday_vocab.html', icon: '📝' },
+            { name: 'Friday', file: 'inconsistent_friday_vocab.html', icon: '📝' },
+            { name: 'Saturday', file: 'inconsistent_saturday_vocab.html', icon: '📝' }
+        ];
         
         // Available vocabulary topics (based on files)
         const vocabularyTopics = [
@@ -288,7 +310,27 @@
         // Initialize the page
         window.onload = function() {
             loadTopics();
+            loadInconsistentTopics();
         };
+
+        // Load inconsistent topics
+        function loadInconsistentTopics() {
+            const inconsistentContainer = document.getElementById('inconsistentTopics');
+            inconsistentContainer.innerHTML = '';
+            
+            inconsistentTopics.forEach(topic => {
+                const topicCard = document.createElement('div');
+                topicCard.className = 'topic-card';
+                topicCard.onclick = function() { openTopic(topic.file); };
+                
+                topicCard.innerHTML = `
+                    <div class="topic-icon">${topic.icon}</div>
+                    <div class="topic-title">${topic.name}</div>
+                `;
+                
+                inconsistentContainer.appendChild(topicCard);
+            });
+        }
 
         // Load topics into their respective sections
         function loadTopics() {
@@ -364,6 +406,9 @@
             } else if (section === 'grammar') {
                 document.getElementById('grammarContent').style.display = 'block';
                 currentView = 'grammar';
+            } else if (section === 'inconsistent') {
+                document.getElementById('inconsistentContent').style.display = 'block';
+                currentView = 'inconsistent';
             }
             
             // Show back button if not on main view
@@ -414,6 +459,8 @@
                     section = 'topics';
                 } else if (selectedTopic.indexOf('grammar_') !== -1) {
                     section = 'grammar';
+                } else if (selectedTopic.indexOf('inconsistent_') !== -1) {
+                    section = 'inconsistent';
                 }
                 
                 console.log('Returning to section:', section);
