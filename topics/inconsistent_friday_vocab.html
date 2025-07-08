@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inconsistent Friday Vocabulary</title>
+  <link rel="stylesheet" href="css/inconsistent_vocab.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Friday - Vocabulary</h1>
+    
+    <table class="vocab-table">
+      <thead>
+        <tr>
+          <th>Từ/Cụm từ (Loại từ)</th>
+          <th>B2 Level</th>
+          <th>Learning Progress</th>
+        </tr>
+      </thead>
+      <tbody id="vocabTableBody">
+        <!-- Table content will be populated by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Empty vocabulary data for Friday (to be filled later)
+    const vocabularyData = [];
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      populateVocabTable('Friday', vocabularyData);
+    });
+  </script>
+  
+  <script src="js/inconsistent_vocab.js"></script>
+</body>
+</html>

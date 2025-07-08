@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inconsistent Monday Vocabulary</title>
+  <link rel="stylesheet" href="css/inconsistent_vocab.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Monday - Hobbies & Free Time Vocabulary</h1>
+    
+    <table class="vocab-table">
+      <thead>
+        <tr>
+          <th>Từ/Cụm từ (Loại từ)</th>
+          <th>B2 Level</th>
+          <th>Learning Progress</th>
+        </tr>
+      </thead>
+      <tbody id="vocabTableBody">
+        <!-- Table content will be populated by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Vocabulary data from hobbies_free_time.html
+    const vocabularyData = [
+      {
+        front: "be passionate about",
+        type: "Cụm động từ",
+        meaning: "đam mê",
+        example: "She is passionate about gardening and spends hours in her backyard."
+      },
+      {
+        front: "rewarding",
+        type: "Tính từ",
+        meaning: "đáng giá, mang lại cảm giác hài lòng",
+        example: "Volunteering can be a very rewarding experience."
+      },
+      {
+        front: "fruits of my labor",
+        type: "Danh từ (idiom)",
+        meaning: "thành quả lao động",
+        example: "It's satisfying to enjoy the fruits of my labor after months of effort."
+      },
+      {
+        front: "perspectives",
+        type: "Danh từ số nhiều",
+        meaning: "góc nhìn, quan điểm",
+        example: "Traveling gives you new perspectives on life."
+      },
+      {
+        front: "capture moments",
+        type: "Cụm động từ",
+        meaning: "ghi lại khoảnh khắc",
+        example: "Photographers love to capture special moments through their lenses."
+      },
+      {
+        front: "express myself creatively",
+        type: "Cụm động từ",
+        meaning: "thể hiện bản thân một cách sáng tạo",
+        example: "Playing the guitar helps me express myself creatively."
+      },
+      {
+        front: "beautiful moments and scenes",
+        type: "Cụm từ",
+        meaning: "những khoảnh khắc và khung cảnh đẹp",
+        example: "Photography allows me to capture beautiful moments and scenes from my travels."
+      },
+      {
+        front: "whether it's… or…",
+        type: "Cụm từ",
+        meaning: "dù là… hay là…",
+        example: "Whether it's hiking in the mountains or swimming in the ocean, I love outdoor activities."
+      },
+      {
+        front: "stunning sunset",
+        type: "Cụm từ",
+        meaning: "hoàng hôn tuyệt đẹp",
+        example: "We sat on the beach and watched the stunning sunset over the ocean."
+      },
+      {
+        front: "bustling city street",
+        type: "Cụm từ",
+        meaning: "phố thị nhộn nhịp",
+        example: "Street photographers enjoy capturing life on bustling city streets."
+      },
+      {
+        front: "quiet moment in nature",
+        type: "Cụm từ",
+        meaning: "khoảnh khắc yên bình trong thiên nhiên",
+        example: "After a busy week, I enjoy finding a quiet moment in nature to relax and recharge."
+      },
+      {
+        front: "take up",
+        type: "Phrasal verb",
+        meaning: "bắt đầu một sở thích / hoạt động",
+        example: "I decided to take up photography as a hobby during the pandemic.",
+        isPhrasalVerb: true
+      },
+      {
+        front: "get into",
+        type: "phrasal verb (cụm động từ)",
+        meaning: "bắt đầu thích, có hứng thú với thứ gì đó",
+        example: "I really got into photography after buying my first camera."
+      },
+      {
+        front: "incredibly satisfying",
+        type: "cụm tính từ (adverb + adj)",
+        meaning: "cực kỳ thỏa mãn, rất hài lòng",
+        example: "Learning a new skill can be incredibly satisfying."
+      },
+      {
+        front: "play along with",
+        type: "phrasal verb (cụm động từ)",
+        meaning: "chơi cùng, đệm theo (âm nhạc); đôi khi là 'giả vờ đồng ý' (ngữ cảnh khác)",
+        example: "I like to play along with my favorite songs on the guitar."
+      }
+    ];
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      populateVocabTable('Monday', vocabularyData);
+    });
+  </script>
+  
+  <script src="js/inconsistent_vocab.js"></script>
+</body>
+</html>
