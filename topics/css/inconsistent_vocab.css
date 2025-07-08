@@ -1,0 +1,75 @@
+/* Inconsistent Vocabulary CSS */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 0;
+  padding: 20px;
+  color: #333;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #4a148c;
+  margin-bottom: 30px;
+}
+
+.vocab-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.vocab-table th {
+  background-color: #6a1b9a;
+  color: white;
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.vocab-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+.vocab-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.vocab-table tr:hover {
+  background-color: #e6e6ff;
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: center;
+}
+
+.progress-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.word-type {
+  font-style: italic;
+  color: #666;
+  font-size: 0.9em;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 30px;
+  font-style: italic;
+  color: #666;
+}
