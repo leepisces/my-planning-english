@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Vocabulary Study Groups</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: 2px solid #ddd;
+            font-size: 1.1em;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.2em;
+        }
+        
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .filter-btn:hover {
+            background: #e9ecef;
+        }
+        
+        .filter-btn.active:hover {
+            background: #5a6ecc;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn, .import-label {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .action-btn:hover, .import-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .groups-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .group-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .difficulty-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5em;
+            z-index: 2;
+        }
+        
+        .vocab-counter {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .vocab-counter-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-right: 10px;
+        }
+        
+        .vocab-counter-input {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .vocab-counter-total {
+            margin-left: 5px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .difficulty-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5em;
+            z-index: 2;
+        }
+        
+        .vocab-counter {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .vocab-counter-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-right: 10px;
+        }
+        
+        .vocab-counter-input {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .vocab-counter-total {
+            margin-left: 5px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .group-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .group-number {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .group-title {
+            color: #2c3e50;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .topics-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .topics-list li {
+            background: rgba(255, 255, 255, 0.7);
+            margin: 8px 0;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .topics-list li:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
+        }
+
+        .topic-number {
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .rationale {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            font-style: italic;
+            color: #555;
+            border-left: 3px solid #667eea;
+            line-height: 1.5;
+        }
+
+        .study-tips {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .study-tips h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .tips-list {
+            list-style: none;
+        }
+
+        .tips-list li {
+            background: rgba(255, 255, 255, 0.8);
+            margin: 10px 0;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b6b;
+            transition: all 0.3s ease;
+        }
+
+        .tips-list li:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateX(3px);
+        }
+
+        .progress-tracker {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-tracker h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #00c9ff, #92fe9d);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            flex-grow: 1;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .groups-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+        
+        /* Modern Circular Checkbox Styles */
+        .checkbox-container {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 20px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .checkbox-container:hover {
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+        
+        /* Hide the default checkbox */
+        .group-checkbox {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        /* Create a custom checkbox */
+        .checkbox-container .checkmark {
+            position: relative;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            transition: all 0.3s ease;
+        }
+        
+        /* When checked, style the checkmark */
+        .group-checkbox:checked ~ .checkmark {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+        
+        /* Show the checkmark when checked */
+        .group-checkbox:checked ~ .checkmark:after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #4CAF50;
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+        }
+        
+        .checkbox-container label {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+        
+        .group-checkbox:checked + label {
+            color: #4CAF50;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>English Vocabulary Study Groups</h1>
+        <p class="subtitle">Organized for effective learning - Pre-intermediate to Intermediate level</p>
+        
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search by topic name or number..." id="searchInput">
+            <span class="search-icon">🔍</span>
+        </div>
+        
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">All Groups</button>
+            <button class="filter-btn" data-filter="basic">Basic Level 🟢</button>
+            <button class="filter-btn" data-filter="intermediate">Intermediate Level 🟡</button>
+            <button class="filter-btn" data-filter="advanced">Advanced Level 🔴</button>
+        </div>
+        
+        <div class="action-buttons">
+            <button id="resetProgressBtn" class="action-btn">Reset All Progress</button>
+            <button id="exportProgressBtn" class="action-btn">Export Progress</button>
+            <label for="importProgressInput" class="action-btn import-label">Import Progress</label>
+            <input type="file" id="importProgressInput" accept=".json" style="display: none;">
+        </div>
+
+        <div class="groups-container">
+            <div class="group-card" data-group="1" data-difficulty="basic">
+                <div class="difficulty-badge" title="Basic Level">🟢</div>
+                <div class="group-number">Group 1</div>
+                <h3 class="group-title">The World Around Us</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">5.</span> Country, nationality and language</li>
+                    <li><span class="topic-number">6.</span> The physical world</li>
+                    <li><span class="topic-number">7.</span> Weather</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="2" data-difficulty="basic">
+                <div class="difficulty-badge" title="Basic Level">🟢</div>
+                <div class="group-number">Group 2</div>
+                <h3 class="group-title">Animals</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">8.</span> Animals and insects</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="3" data-difficulty="basic">
+                <div class="difficulty-badge" title="Basic Level">🟢</div>
+                <div class="group-number">Group 3</div>
+                <h3 class="group-title">The Body & Appearance</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">9.</span> The body and movement</li>
+                    <li><span class="topic-number">10.</span> Describing appearance</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="4" data-difficulty="basic">
+                <div class="difficulty-badge" title="Basic Level">🟢</div>
+                <div class="group-number">Group 4</div>
+                <h3 class="group-title">Character & Emotions</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">11.</span> Describing character</li>
+                    <li><span class="topic-number">12.</span> Feelings</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="5" data-difficulty="basic">
+                <div class="difficulty-badge" title="Basic Level">🟢</div>
+                <div class="group-number">Group 5</div>
+                <h3 class="group-title">Relationships & Life Stages</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">13.</span> Family and friends</li>
+                    <li><span class="topic-number">14.</span> Growing up</li>
+                    <li><span class="topic-number">15.</span> Romance, marriage and divorce</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="6" data-difficulty="basic">
+                <div class="difficulty-badge" title="Basic Level">🟢</div>
+                <div class="group-number">Group 6</div>
+                <h3 class="group-title">Daily Routines & Living</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">16.</span> Daily routines</li>
+                    <li><span class="topic-number">17.</span> The place where you live</li>
+                    <li><span class="topic-number">18.</span> Around the home</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="7" data-difficulty="basic">
+                <div class="difficulty-badge" title="Basic Level">🟢</div>
+                <div class="group-number">Group 7</div>
+                <h3 class="group-title">Money & Health</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">19.</span> Money</li>
+                    <li><span class="topic-number">20.</span> Health</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="8" data-difficulty="basic">
+                <div class="difficulty-badge" title="Basic Level">🟢</div>
+                <div class="group-number">Group 8</div>
+                <h3 class="group-title">Clothing & Fashion</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">21.</span> Clothes</li>
+                    <li><span class="topic-number">22.</span> Fashion and buying clothes</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="9" data-difficulty="basic">
+                <div class="difficulty-badge" title="Basic Level">🟢</div>
+                <div class="group-number">Group 9</div>
+                <h3 class="group-title">Shopping & Food</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">23.</span> Shopping</li>
+                    <li><span class="topic-number">24.</span> Food</li>
+                    <li><span class="topic-number">25.</span> Cooking</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="10" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 10</div>
+                <h3 class="group-title">Urban vs Rural Life</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">26.</span> City life</li>
+                    <li><span class="topic-number">27.</span> Life in the country</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="11" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 11</div>
+                <h3 class="group-title">Transportation & Road Safety</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">28.</span> Transport</li>
+                    <li><span class="topic-number">29.</span> On the road</li>
+                    <li><span class="topic-number">30.</span> Notices and warnings</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="12" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 12</div>
+                <h3 class="group-title">School Education</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">31.</span> Classroom language</li>
+                    <li><span class="topic-number">32.</span> School education</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="13" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 13</div>
+                <h3 class="group-title">Language Learning & Higher Education</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">33.</span> Studying English and taking exams</li>
+                    <li><span class="topic-number">34.</span> University education</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="14" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 14</div>
+                <h3 class="group-title">Employment & Career</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">35.</span> Jobs</li>
+                    <li><span class="topic-number">36.</span> Talking about your work</li>
+                    <li><span class="topic-number">37.</span> Making a career</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="15" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 15</div>
+                <h3 class="group-title">Business & Finance</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">38.</span> Working in an office</li>
+                    <li><span class="topic-number">39.</span> Running a company</li>
+                    <li><span class="topic-number">40.</span> Business and finance</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="16" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 16</div>
+                <h3 class="group-title">Sports & Recreation</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">41.</span> Sport and leisure</li>
+                    <li><span class="topic-number">42.</span> Competitive sport</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="17" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 17</div>
+                <h3 class="group-title">Arts & Entertainment</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">43.</span> Books and films</li>
+                    <li><span class="topic-number">44.</span> Music</li>
+                    <li><span class="topic-number">45.</span> Special events</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="18" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 18</div>
+                <h3 class="group-title">Travel Planning</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">46.</span> Travel bookings</li>
+                    <li><span class="topic-number">47.</span> Air travel</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="19" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 19</div>
+                <h3 class="group-title">Accommodation & Dining</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">48.</span> Hotels and restaurants</li>
+                    <li><span class="topic-number">49.</span> Cafés</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="20" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 20</div>
+                <h3 class="group-title">Tourism & Holidays</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">50.</span> Sightseeing holidays</li>
+                    <li><span class="topic-number">51.</span> Holidays by the sea</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="21" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 21</div>
+                <h3 class="group-title">Traditional & Personal Communication</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">52.</span> Newspapers and television</li>
+                    <li><span class="topic-number">53.</span> Phoning and texting</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="22" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 22</div>
+                <h3 class="group-title">Digital Technology</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">54.</span> Computers</li>
+                    <li><span class="topic-number">55.</span> Email and the Internet</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="23" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 23</div>
+                <h3 class="group-title">Crime & Politics</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">56.</span> Crime</li>
+                    <li><span class="topic-number">57.</span> Politics</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="24" data-difficulty="intermediate">
+                <div class="difficulty-badge" title="Intermediate Level">🟡</div>
+                <div class="group-number">Group 24</div>
+                <h3 class="group-title">Global Issues</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">58.</span> Global problems</li>
+                    <li><span class="topic-number">59.</span> War and peace</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="25" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 25</div>
+                <h3 class="group-title">Numbers & Measurements</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">60.</span> Time</li>
+                    <li><span class="topic-number">61.</span> Numbers</li>
+                    <li><span class="topic-number">62.</span> Distance, dimensions and size</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="26" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 26</div>
+                <h3 class="group-title">Objects & Materials</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">63.</span> Objects, materials, shapes and colour</li>
+                    <li><span class="topic-number">64.</span> Containers and quantities</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="27" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 27</div>
+                <h3 class="group-title">Social Communication</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">65.</span> Apologies, excuses and thanks</li>
+                    <li><span class="topic-number">66.</span> Requests, permission and suggestions</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="28" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 28</div>
+                <h3 class="group-title">Expressing Opinions & Social Expressions</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">67.</span> Opinions, agreeing and disagreeing</li>
+                    <li><span class="topic-number">68.</span> Likes, dislikes, attitudes and preferences</li>
+                    <li><span class="topic-number">69.</span> Greetings, farewells and special expressions</li>
+                </ul>
+            </div>
+            <div class="group-card" data-group="33" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 33</div>
+                <h3 class="group-title">Key Verbs - Make, Do, Take</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">81.</span> Make, do and take: uses and phrases</li>
+                    <li><span class="topic-number">82.</span> Key verbs: give, keep and miss</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="34" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 34</div>
+                <h3 class="group-title">Key Verbs - Get & Go</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">83.</span> Get: uses, phrases and phrasal verbs</li>
+                    <li><span class="topic-number">84.</span> Go: meanings and expressions</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="35" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 35</div>
+                <h3 class="group-title">Senses</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">85.</span> The senses</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="36" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 36</div>
+                <h3 class="group-title">Grammar & Word Types</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">86.</span> Uncountable nouns</li>
+                    <li><span class="topic-number">87.</span> Verb constructions 1</li>
+                    <li><span class="topic-number">88.</span> Verb constructions 2</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="37" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 37</div>
+                <h3 class="group-title">Adjectives, Adverbs & Prepositions</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">89.</span> Adjectives</li>
+                    <li><span class="topic-number">90.</span> Prepositions: place and movement</li>
+                    <li><span class="topic-number">91.</span> Adverbs</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="38" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 38</div>
+                <h3 class="group-title">Connecting & Linking</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">92.</span> Time and sequence</li>
+                    <li><span class="topic-number">93.</span> Addition and contrast</li>
+                    <li><span class="topic-number">94.</span> Reason, purpose, result, condition</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="39" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 39</div>
+                <h3 class="group-title">Style & Register</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">95.</span> Formal and informal English</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="40" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 40</div>
+                <h3 class="group-title">Practical Writing</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">96.</span> Completing forms and CVs</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+
+            <div class="group-card" data-group="41" data-difficulty="advanced">
+                <div class="difficulty-badge" title="Advanced Level">🔴</div>
+                <div class="group-number">Group 41</div>
+                <h3 class="group-title">Communication Formats</h3>
+                <ul class="topics-list">
+                    <li><span class="topic-number">97.</span> Formal letters and emails</li>
+                    <li><span class="topic-number">98.</span> Informal emails and messages</li>
+                    <li><span class="topic-number">99.</span> Abbreviations</li>
+                </ul>
+                <div class="vocab-counter">
+                    <span class="vocab-counter-label">Words learned:</span>
+                    <input type="number" class="vocab-counter-input" min="0" max="100" value="0">
+                    <span class="vocab-counter-total">/ 100</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="study-tips">
+            <h3>🎯 Effective Study Tips</h3>
+            <ul class="tips-list">
+                <li><strong>Focus on one group at a time</strong> - Master related vocabulary together for better retention</li>
+                <li><strong>Create example sentences</strong> - Use words from the same group in context to see their relationships</li>
+                <li><strong>Use spaced repetition</strong> - Review each group after 1 day, 3 days, 1 week, and 2 weeks</li>
+                <li><strong>Make connections</strong> - Compare and contrast words within each group to understand nuances</li>
+                <li><strong>Apply in conversation</strong> - Try to use words from your current study group in real conversations</li>
+            </ul>
+        </div>
+
+        <div class="progress-tracker">
+            <h3>📊 Track Your Progress</h3>
+            <p>Mark groups as you complete them to visualize your learning journey:</p>
+            
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="progressBarFill"></div>
+            </div>
+            
+            <p class="progress-text" id="progressText"></p>
+        </div>
+    </div>
+
+    <script>
+        // Generate checkboxes for all groups
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add checkbox to each group
+            const groups = document.querySelectorAll('.group-card');
+            groups.forEach((group, index) => {
+                const groupNumber = index + 1;
+                const checkboxContainer = document.createElement('div');
+                checkboxContainer.className = 'checkbox-container';
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = 'group' + groupNumber;
+                checkbox.className = 'group-checkbox';
+                
+                // Create custom checkmark span
+                const checkmark = document.createElement('span');
+                checkmark.className = 'checkmark';
+                
+                const label = document.createElement('label');
+                label.htmlFor = 'group' + groupNumber;
+                label.textContent = 'Mark as completed';
+                
+                // Add change event to update label text
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        label.textContent = 'Done';
+                    } else {
+                        label.textContent = 'Mark as completed';
+                    }
+                    saveProgress();
+                    updateProgress();
+                });
+                
+                checkboxContainer.appendChild(checkbox);
+                checkboxContainer.appendChild(checkmark);
+                checkboxContainer.appendChild(label);
+                
+                // Make the entire container clickable
+                checkboxContainer.addEventListener('click', function(e) {
+                    // Only toggle if clicking on the container or checkmark (not the label)
+                    if (e.target === this || e.target === checkmark) {
+                        checkbox.checked = !checkbox.checked;
+                        
+                        // Update label text
+                        if (checkbox.checked) {
+                            label.textContent = 'Done';
+                        } else {
+                            label.textContent = 'Mark as completed';
+                        }
+                        
+                        // Save progress
+                        saveProgress();
+                        updateProgress();
+                    }
+                });
+                
+                group.appendChild(checkboxContainer);
+            });
+            
+            // Set up vocabulary counter inputs
+            setupVocabCounters();
+            
+            // Load saved progress
+            loadProgress();
+            
+            // Add search functionality
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', filterGroups);
+            
+            // Add filter buttons functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    // Filter groups
+                    filterGroups();
+                });
+            });
+            
+            // Set up action buttons
+            document.getElementById('resetProgressBtn').addEventListener('click', resetAllProgress);
+            document.getElementById('exportProgressBtn').addEventListener('click', exportProgress);
+            document.getElementById('importProgressInput').addEventListener('change', importProgress);
+        });
+        
+        function setupVocabCounters() {
+            const vocabInputs = document.querySelectorAll('.vocab-counter-input');
+            vocabInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    // Ensure value is between 0 and 100
+                    if (this.value < 0) this.value = 0;
+                    if (this.value > 100) this.value = 100;
+                    
+                    // Save the vocabulary count
+                    saveVocabCounts();
+                });
+            });
+        }
+        
+        function updateProgress() {
+            const totalGroups = document.querySelectorAll('.group-checkbox').length;
+            const completedGroups = document.querySelectorAll('.group-checkbox:checked').length;
+            const progressBar = document.querySelector('.progress-bar-fill');
+            const progressText = document.querySelector('.progress-text');
+            
+            const progressPercentage = (completedGroups / totalGroups) * 100;
+            progressBar.style.width = progressPercentage + '%';
+            progressText.textContent = `${completedGroups}/${totalGroups} groups completed (${Math.round(progressPercentage)}%)`;
+        }
+        
+        function saveProgress() {
+            const progress = {};
+            const checkboxes = document.querySelectorAll('.group-checkbox');
+            
+            checkboxes.forEach((checkbox, index) => {
+                const groupNumber = index + 1;
+                progress[groupNumber] = checkbox.checked;
+            });
+            
+            localStorage.setItem('vocabGroupProgress', JSON.stringify(progress));
+        }
+        
+        function saveVocabCounts() {
+            const vocabCounts = {};
+            const groups = document.querySelectorAll('.group-card');
+            
+            groups.forEach(group => {
+                const groupId = group.getAttribute('data-group');
+                const vocabInput = group.querySelector('.vocab-counter-input');
+                if (vocabInput) {
+                    vocabCounts[groupId] = parseInt(vocabInput.value) || 0;
+                }
+            });
+            
+            localStorage.setItem('vocabCounts', JSON.stringify(vocabCounts));
+        }
+        
+        function loadProgress() {
+            // Load group completion status
+            const savedProgress = localStorage.getItem('vocabGroupProgress');
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                const checkboxes = document.querySelectorAll('.group-checkbox');
+                
+                checkboxes.forEach((checkbox, index) => {
+                    const groupId = index + 1;
+                    if (progress[groupId]) {
+                        checkbox.checked = true;
+                        // Find the label (now it's the 3rd child after checkbox and checkmark)
+                        const label = checkbox.parentNode.querySelector('label');
+                        if (label) {
+                            label.textContent = 'Done';
+                        }
+                    } else {
+                        // Find the label (now it's the 3rd child after checkbox and checkmark)
+                        const label = checkbox.parentNode.querySelector('label');
+                        if (label) {
+                            label.textContent = 'Mark as completed';
+                        }
+                    }
+                });
+                
+                updateProgress();
+            }
+            
+            // Load vocabulary counts
+            const savedVocabCounts = localStorage.getItem('vocabCounts');
+            if (savedVocabCounts) {
+                const vocabCounts = JSON.parse(savedVocabCounts);
+                
+                Object.keys(vocabCounts).forEach(groupId => {
+                    const group = document.querySelector(`.group-card[data-group="${groupId}"]`);
+                    if (group) {
+                        const vocabInput = group.querySelector('.vocab-counter-input');
+                        if (vocabInput) {
+                            vocabInput.value = vocabCounts[groupId];
+                        }
+                    }
+                });
+            }
+        }
+        
+        function resetAllProgress() {
+            if (confirm('Are you sure you want to reset all progress? This will clear all completed groups and vocabulary counts.')) {
+                // Reset checkboxes
+                const checkboxes = document.querySelectorAll('.group-checkbox');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                
+                // Reset vocab counters
+                const vocabInputs = document.querySelectorAll('.vocab-counter-input');
+                vocabInputs.forEach(input => {
+                    input.value = 0;
+                });
+                
+                // Clear localStorage
+                localStorage.removeItem('vocabGroupProgress');
+                localStorage.removeItem('vocabCounts');
+                
+                // Update progress bar
+                updateProgress();
+                
+                alert('All progress has been reset.');
+            }
+        }
+        
+        function exportProgress() {
+            // Gather all data to export
+            const exportData = {
+                vocabGroupProgress: JSON.parse(localStorage.getItem('vocabGroupProgress') || '{}'),
+                vocabCounts: JSON.parse(localStorage.getItem('vocabCounts') || '{}')
+            };
+            
+            // Convert to JSON string
+            const jsonData = JSON.stringify(exportData, null, 2);
+            
+            // Create a blob and download link
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'vocab_in_use.json';
+            document.body.appendChild(a);
+            a.click();
+            
+            // Clean up
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+        
+        function importProgress(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    // Validate imported data structure
+                    if (importedData.vocabGroupProgress && importedData.vocabCounts) {
+                        // Save to localStorage
+                        localStorage.setItem('vocabGroupProgress', JSON.stringify(importedData.vocabGroupProgress));
+                        localStorage.setItem('vocabCounts', JSON.stringify(importedData.vocabCounts));
+                        
+                        // Load the imported data
+                        loadProgress();
+                        
+                        alert('Progress imported successfully!');
+                    } else {
+                        alert('Invalid import file format. Please use a file exported from this application.');
+                    }
+                } catch (error) {
+                    alert('Error importing progress: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset the file input so the same file can be selected again
+            event.target.value = '';
+        }
+        
+        function filterGroups() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+            const groups = document.querySelectorAll('.group-card');
+            
+            groups.forEach(group => {
+                const title = group.querySelector('.group-title').textContent.toLowerCase();
+                const topics = Array.from(group.querySelectorAll('.topics-list li')).map(li => li.textContent.toLowerCase());
+                const groupNumber = group.querySelector('.group-number').textContent.toLowerCase();
+                const difficulty = group.getAttribute('data-difficulty');
+                
+                const matchesSearch = title.includes(searchTerm) || 
+                                      topics.some(topic => topic.includes(searchTerm)) || 
+                                      groupNumber.includes(searchTerm);
+                                      
+                const matchesFilter = activeFilter === 'all' || difficulty === activeFilter;
+                
+                if (matchesSearch && matchesFilter) {
+                    group.classList.remove('hidden');
+                } else {
+                    group.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
