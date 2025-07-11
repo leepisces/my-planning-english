@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Sports Vocabulary Story</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .story {
+        font-size: 1.1em;
+        text-align: justify;
+        margin-bottom: 20px;
+      }
+
+      .vocab-word {
+        background: linear-gradient(45deg, #3498db, #2980b9);
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        margin: 1px;
+        font-weight: bold;
+      }
+
+      .vocab-word:hover {
+        background: linear-gradient(45deg, #e74c3c, #c0392b);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .vocab-word.bold-word {
+        font-weight: 900;
+        background: linear-gradient(45deg, #27ae60, #229954);
+      }
+
+      .vocab-word.bold-word:hover {
+        background: linear-gradient(45deg, #e67e22, #d35400);
+      }
+
+      .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .popup-content {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        transform: scale(0.8);
+        animation: popIn 0.3s ease forwards;
+      }
+
+      @keyframes popIn {
+        to {
+          transform: scale(1);
+        }
+      }
+
+      .popup h3 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-size: 2em;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .meaning {
+        font-size: 1.2em;
+        margin: 15px 0;
+        padding: 15px;
+        border-radius: 8px;
+      }
+
+      .vietnamese {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        color: #2c3e50;
+        font-weight: bold;
+      }
+
+      .english {
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        color: #2c3e50;
+      }
+
+      .word-type {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        color: #2c3e50;
+        font-style: italic;
+        font-weight: bold;
+      }
+
+      .close-btn {
+        background: linear-gradient(45deg, #e74c3c, #c0392b);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1.1em;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+        font-weight: bold;
+      }
+
+      .close-btn:hover {
+        background: linear-gradient(45deg, #c0392b, #a93226);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .instructions {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🏅 The Greatest Sports Day Ever!</h1>
+
+      <div class="instructions">
+        📖 Click on the colored words to see their Vietnamese and English
+        meanings!
+      </div>
+
+      <div class="story">
+        Last summer, I went on a
+        <span class="vocab-word" data-word="trip">trip</span> with my best
+        friend, Leo 🌞. We both love
+        <span class="vocab-word bold-word" data-word="sport">sport</span>, so we
+        decided to visit a town famous for its international sports
+        <span class="vocab-word" data-word="festival">festival</span>.
+        <br /><br />
+        On the first day, we watched
+        <span class="vocab-word bold-word" data-word="athletics"
+          >athletics</span
+        >
+        at the
+        <span class="vocab-word bold-word" data-word="stadium">stadium</span>.
+        It was so exciting to see each
+        <span class="vocab-word bold-word" data-word="athlete">athlete</span>
+        <span class="vocab-word bold-word" data-word="run">run</span>,
+        <span class="vocab-word bold-word" data-word="jump">jump</span>, and
+        <span class="vocab-word bold-word" data-word="throw">throw</span> with
+        so much energy! 🏃‍♂️💨 <br /><br />
+        Next, we went to the
+        <span class="vocab-word bold-word" data-word="motor racing"
+          >motor racing</span
+        >
+        event. The noise was crazy! Every
+        <span class="vocab-word bold-word" data-word="racing driver"
+          >racing driver</span
+        >
+        tried their best to
+        <span class="vocab-word bold-word" data-word="drive">drive</span> fast
+        and <span class="vocab-word bold-word" data-word="race">race</span> to
+        the finish line. Leo said he wanted to become a racing driver someday!
+        🏎️💥 <br /><br />
+        In the evening, we relaxed by the
+        <span class="vocab-word bold-word" data-word="pool">pool</span> and
+        watched the
+        <span class="vocab-word bold-word" data-word="swimming">swimming</span>
+        contest. One
+        <span class="vocab-word bold-word" data-word="swimmer">swimmer</span>
+        finished first and smiled as he got his gold
+        <span class="vocab-word" data-word="medal">medal</span>. 🏊‍♀️🥇
+        <br /><br />
+        The next morning, we saw an
+        <span class="vocab-word" data-word="intense">intense</span>
+        <span class="vocab-word bold-word" data-word="boxing">boxing</span>
+        match in the
+        <span class="vocab-word bold-word" data-word="boxing ring"
+          >boxing ring</span
+        >. The
+        <span class="vocab-word bold-word" data-word="boxer">boxers</span>
+        <span class="vocab-word bold-word" data-word="fight">fought</span>
+        <span class="vocab-word" data-word="bravely">bravely</span>, but one
+        finally won with a powerful
+        <span class="vocab-word" data-word="punch">punch</span>. 🥊😮
+        <br /><br />
+        Later that day, we traveled to the mountains for some
+        <span class="vocab-word bold-word" data-word="skiing">skiing</span>. I
+        had never tried skiing before, but the
+        <span class="vocab-word bold-word" data-word="ski slopes"
+          >ski slopes</span
+        >
+        were amazing! I watched a professional
+        <span class="vocab-word bold-word" data-word="skier">skier</span> show
+        off his skills. ⛷️❄️ <br /><br />
+        In the afternoon, we cheered loudly at a
+        <span class="vocab-word bold-word" data-word="football">football</span>
+        game on the
+        <span class="vocab-word bold-word" data-word="pitch">pitch</span>. The
+        <span class="vocab-word bold-word" data-word="footballer"
+          >footballers</span
+        >
+        were fast and clever. ⚽🔥 <br /><br />
+        That evening, we went to an
+        <span class="vocab-word bold-word" data-word="ice hockey"
+          >ice hockey</span
+        >
+        match. The
+        <span class="vocab-word bold-word" data-word="ice hockey rink"
+          >ice hockey rink</span
+        >
+        was <span class="vocab-word" data-word="freezing">freezing</span>, but
+        the
+        <span class="vocab-word bold-word" data-word="ice hockey player"
+          >ice hockey players</span
+        >
+        didn't mind. They played hard and made us
+        <span class="vocab-word" data-word="shout">shout</span> in excitement!
+        🏒⛸️ <br /><br />
+        The next day, we visited a green
+        <span class="vocab-word bold-word" data-word="golf course"
+          >golf course</span
+        >, where some
+        <span class="vocab-word bold-word" data-word="golfer">golfers</span>
+        played calmly and seriously. Leo tried to
+        <span class="vocab-word bold-word" data-word="play">play</span> too, but
+        hit the ball into a
+        <span class="vocab-word" data-word="tree">tree</span>! 😂🏌️ <br /><br />
+        After lunch, we walked to the
+        <span class="vocab-word bold-word" data-word="basketball court"
+          >basketball court</span
+        >. The tall
+        <span class="vocab-word bold-word" data-word="basketball player"
+          >basketball players</span
+        >
+        jumped and scored many points. It was fast and fun! 🏀⛹️ <br /><br />
+        In the late afternoon, we went
+        <span class="vocab-word bold-word" data-word="sailing">sailing</span> on
+        a beautiful
+        <span class="vocab-word bold-word" data-word="lake">lake</span>, and
+        then on the
+        <span class="vocab-word bold-word" data-word="sea">sea</span>. The
+        <span class="vocab-word" data-word="wind">wind</span> was strong, but
+        the
+        <span class="vocab-word bold-word" data-word="sailor">sailors</span>
+        knew how to
+        <span class="vocab-word bold-word" data-word="sail">sail</span> safely.
+        ⛵🌊 <br /><br />
+        It was the best sports weekend of our lives. We saw every type of
+        <span class="vocab-word bold-word" data-word="person">person</span>
+        doing their best. We
+        <span class="vocab-word" data-word="cheer">cheered</span>, learned, and
+        even tried new sports ourselves! What an
+        <span class="vocab-word" data-word="unforgettable">unforgettable</span>
+        <span class="vocab-word" data-word="trip">trip</span>! 🙌🎉
+      </div>
+    </div>
+
+    <div class="popup" id="popup">
+      <div class="popup-content">
+        <h3 id="popup-word"></h3>
+        <div class="meaning vietnamese" id="popup-vietnamese"></div>
+        <div class="meaning english" id="popup-english"></div>
+        <div class="meaning word-type" id="popup-type"></div>
+        <button class="close-btn" onclick="closePopup()">Close</button>
+      </div>
+    </div>
+
+    <script>
+      const vocabulary = {
+        sport: {
+          vietnamese: "thể thao",
+          english: "physical activity or games to keep fit or compete",
+          type: "noun",
+        },
+        athletics: {
+          vietnamese: "điền kinh",
+          english: "sports like running, jumping, and throwing",
+          type: "noun",
+        },
+        "motor racing": {
+          vietnamese: "đua xe mô tô",
+          english: "the sport of driving fast cars or bikes in competitions",
+          type: "noun",
+        },
+        swimming: {
+          vietnamese: "bơi lội",
+          english: "the sport or activity of moving through water",
+          type: "noun",
+        },
+        boxing: {
+          vietnamese: "quyền anh",
+          english: "a sport where two people fight using their fists",
+          type: "noun",
+        },
+        skiing: {
+          vietnamese: "trượt tuyết",
+          english: "the sport of moving over snow on skis",
+          type: "noun",
+        },
+        football: {
+          vietnamese: "bóng đá",
+          english: "a team game where players kick a ball to score goals",
+          type: "noun",
+        },
+        "ice hockey": {
+          vietnamese: "khúc côn cầu trên băng",
+          english: "a fast team game played on ice with sticks and a puck",
+          type: "noun",
+        },
+        golf: {
+          vietnamese: "đánh gôn",
+          english: "a sport where you hit a ball into holes using clubs",
+          type: "noun",
+        },
+        basketball: {
+          vietnamese: "bóng rổ",
+          english: "a game where teams try to throw a ball into a high net",
+          type: "noun",
+        },
+        sailing: {
+          vietnamese: "chèo thuyền buồm",
+          english: "traveling or racing in a boat with sails",
+          type: "noun",
+        },
+        person: { vietnamese: "người", english: "a human being", type: "noun" },
+        athlete: {
+          vietnamese: "vận động viên",
+          english: "someone who competes in sports",
+          type: "noun",
+        },
+        "racing driver": {
+          vietnamese: "tay đua xe",
+          english: "a person who drives cars fast in races",
+          type: "noun",
+        },
+        swimmer: {
+          vietnamese: "người bơi",
+          english: "a person who swims well or in competitions",
+          type: "noun",
+        },
+        boxer: {
+          vietnamese: "võ sĩ quyền anh",
+          english: "a person who fights in boxing matches",
+          type: "noun",
+        },
+        skier: {
+          vietnamese: "người trượt tuyết",
+          english: "someone who skis",
+          type: "noun",
+        },
+        footballer: {
+          vietnamese: "cầu thủ bóng đá",
+          english: "someone who plays football",
+          type: "noun",
+        },
+        "ice hockey player": {
+          vietnamese: "cầu thủ khúc côn cầu trên băng",
+          english: "a person who plays ice hockey",
+          type: "noun",
+        },
+        golfer: {
+          vietnamese: "người chơi gôn",
+          english: "a person who plays golf",
+          type: "noun",
+        },
+        "basketball player": {
+          vietnamese: "cầu thủ bóng rổ",
+          english: "a person who plays basketball",
+          type: "noun",
+        },
+        sailor: {
+          vietnamese: "thủy thủ",
+          english: "a person who works on or sails a boat",
+          type: "noun",
+        },
+        run: {
+          vietnamese: "chạy",
+          english: "to move quickly on your feet",
+          type: "verb",
+        },
+        jump: {
+          vietnamese: "nhảy",
+          english: "to push yourself off the ground into the air",
+          type: "verb",
+        },
+        throw: {
+          vietnamese: "ném",
+          english: "to send something through the air with your hand",
+          type: "verb",
+        },
+        drive: {
+          vietnamese: "lái",
+          english: "to control a car or other vehicle",
+          type: "verb",
+        },
+        race: {
+          vietnamese: "đua",
+          english: "to compete to be the fastest",
+          type: "verb",
+        },
+        swim: {
+          vietnamese: "bơi",
+          english: "to move through water using arms and legs",
+          type: "verb",
+        },
+        box: {
+          vietnamese: "đánh quyền anh",
+          english: "to fight in a boxing match",
+          type: "verb",
+        },
+        fight: {
+          vietnamese: "chiến đấu",
+          english: "to use physical force against someone",
+          type: "verb",
+        },
+        ski: {
+          vietnamese: "trượt tuyết",
+          english: "to move over snow using skis",
+          type: "verb",
+        },
+        play: {
+          vietnamese: "chơi (thể thao)",
+          english: "to take part in a game or sport",
+          type: "verb",
+        },
+        sail: {
+          vietnamese: "chèo thuyền buồm",
+          english: "to travel on water in a boat with sails",
+          type: "verb",
+        },
+        track: {
+          vietnamese: "đường chạy điền kinh",
+          english: "a path used for running or racing",
+          type: "noun",
+        },
+        stadium: {
+          vietnamese: "sân vận động",
+          english: "a large building for sports events",
+          type: "noun",
+        },
+        pool: {
+          vietnamese: "hồ bơi",
+          english: "a place filled with water for swimming",
+          type: "noun",
+        },
+        "boxing ring": {
+          vietnamese: "sàn đấu quyền anh",
+          english: "a square area where boxing matches happen",
+          type: "noun",
+        },
+        "ski slopes": {
+          vietnamese: "dốc trượt tuyết",
+          english: "a hill or mountain for skiing",
+          type: "noun",
+        },
+        pitch: {
+          vietnamese: "sân bóng đá",
+          english: "a field where football is played",
+          type: "noun",
+        },
+        "ice hockey rink": {
+          vietnamese: "sân khúc côn cầu băng",
+          english: "a frozen area where ice hockey is played",
+          type: "noun",
+        },
+        "golf course": {
+          vietnamese: "sân gôn",
+          english: "a large area of land for playing golf",
+          type: "noun",
+        },
+        "basketball court": {
+          vietnamese: "sân bóng rổ",
+          english: "a flat area where basketball is played",
+          type: "noun",
+        },
+        sea: {
+          vietnamese: "biển",
+          english: "a large area of salty water",
+          type: "noun",
+        },
+        lake: {
+          vietnamese: "hồ",
+          english: "a large area of water surrounded by land",
+          type: "noun",
+        },
+        trip: {
+          vietnamese: "chuyến đi",
+          english: "a journey to a place",
+          type: "noun",
+        },
+        festival: {
+          vietnamese: "lễ hội",
+          english: "a special event or celebration",
+          type: "noun",
+        },
+        cheer: {
+          vietnamese: "cổ vũ, hò reo",
+          english: "to shout to support someone",
+          type: "verb",
+        },
+        medal: {
+          vietnamese: "huy chương",
+          english: "a round metal award for winning",
+          type: "noun",
+        },
+        shout: {
+          vietnamese: "la hét",
+          english: "to speak very loudly",
+          type: "verb",
+        },
+        wind: { vietnamese: "gió", english: "moving air", type: "noun" },
+        punch: {
+          vietnamese: "cú đấm",
+          english: "a hit with a closed fist",
+          type: "noun",
+        },
+        tree: {
+          vietnamese: "cái cây",
+          english: "a tall plant with a trunk and branches",
+          type: "noun",
+        },
+        freezing: {
+          vietnamese: "lạnh cóng, băng giá",
+          english: "very cold",
+          type: "adjective",
+        },
+        unforgettable: {
+          vietnamese: "không thể quên",
+          english: "very special and hard to forget",
+          type: "adjective",
+        },
+        bravely: {
+          vietnamese: "một cách dũng cảm",
+          english: "in a brave or courageous way",
+          type: "adverb",
+        },
+        intense: {
+          vietnamese: "căng thẳng, kịch liệt",
+          english: "very strong, serious, or full of energy",
+          type: "adjective",
+        },
+      };
+
+      function showPopup(word) {
+        const popup = document.getElementById("popup");
+        const popupWord = document.getElementById("popup-word");
+        const popupVietnamese = document.getElementById("popup-vietnamese");
+        const popupEnglish = document.getElementById("popup-english");
+        const popupType = document.getElementById("popup-type");
+
+        const wordData = vocabulary[word];
+
+        popupWord.textContent = word.charAt(0).toUpperCase() + word.slice(1);
+        popupVietnamese.innerHTML = `🇻🇳 <strong>${wordData.vietnamese}</strong>`;
+        popupEnglish.innerHTML = `🇬🇧 ${wordData.english}`;
+        popupType.innerHTML = `📝 <strong>${wordData.type}</strong>`;
+
+        popup.style.display = "flex";
+      }
+
+      function closePopup() {
+        document.getElementById("popup").style.display = "none";
+      }
+
+      // Add event listeners to all vocabulary words
+      document.querySelectorAll(".vocab-word").forEach((word) => {
+        word.addEventListener("click", function () {
+          showPopup(this.getAttribute("data-word"));
+        });
+      });
+
+      // Close popup when clicking outside
+      document.getElementById("popup").addEventListener("click", function (e) {
+        if (e.target === this) {
+          closePopup();
+        }
+      });
+
+      // Close popup with Escape key
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closePopup();
+        }
+      });
+    </script>
+  </body>
+</html>
