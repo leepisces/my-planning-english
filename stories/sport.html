@@ -301,14 +301,112 @@
         <span class="vocab-word" data-word="unforgettable">unforgettable</span>
         <span class="vocab-word" data-word="trip">trip</span>! 🙌🎉
       </div>
+
+      <div class="instructions" style="margin-top: 40px">
+        🏟️ <strong>Summary: Types of Sports Places in English</strong>
+      </div>
+
+      <table
+        style="
+          width: 100%;
+          border-collapse: collapse;
+          background: #fff;
+          border-radius: 10px;
+          overflow: hidden;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          margin-bottom: 40px;
+        "
+      >
+        <thead
+          style="
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+          "
+        >
+          <tr>
+            <th style="padding: 12px; border: 1px solid #ccc">🗂️ Word</th>
+            <th style="padding: 12px; border: 1px solid #ccc">🔍 Meaning</th>
+            <th style="padding: 12px; border: 1px solid #ccc">🎯 Used For</th>
+            <th style="padding: 12px; border: 1px solid #ccc">📌 Features</th>
+          </tr>
+        </thead>
+        <tbody style="text-align: left">
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              <strong>court</strong>
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Sân (nhỏ, có vạch rõ)
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Basketball, Tennis
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Sàn cứng, phẳng, thường trong nhà
+            </td>
+          </tr>
+          <tr style="background-color: #f9f9f9">
+            <td style="padding: 10px; border: 1px solid #ccc">
+              <strong>pitch</strong>
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Sân (rộng, cỏ)
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Football, Rugby
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Ngoài trời, có cỏ hoặc nhân tạo
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              <strong>course</strong>
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">Sân/dải dài</td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Golf, Horse Racing
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Rất rộng, có chướng ngại, không cố định
+            </td>
+          </tr>
+          <tr style="background-color: #f9f9f9">
+            <td style="padding: 10px; border: 1px solid #ccc">
+              <strong>rink</strong>
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Sân băng/trượt
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Ice Hockey, Skating
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Bằng phẳng, trơn, có thể trong nhà
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              <strong>track</strong>
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">Đường đua</td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Athletics, Car Racing
+            </td>
+            <td style="padding: 10px; border: 1px solid #ccc">
+              Hình oval hoặc đường dài, dùng để chạy/đua
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="popup" id="popup">
       <div class="popup-content">
         <h3 id="popup-word"></h3>
+        <div class="meaning word-type" id="popup-type"></div>
         <div class="meaning vietnamese" id="popup-vietnamese"></div>
         <div class="meaning english" id="popup-english"></div>
-        <div class="meaning word-type" id="popup-type"></div>
         <button class="close-btn" onclick="closePopup()">Close</button>
       </div>
     </div>
@@ -599,9 +697,9 @@
         const wordData = vocabulary[word];
 
         popupWord.textContent = word.charAt(0).toUpperCase() + word.slice(1);
-        popupVietnamese.innerHTML = `🇻🇳 <strong>${wordData.vietnamese}</strong>`;
-        popupEnglish.innerHTML = `🇬🇧 ${wordData.english}`;
         popupType.innerHTML = `📝 <strong>${wordData.type}</strong>`;
+        popupVietnamese.innerHTML = ` <strong>${wordData.vietnamese}</strong>`;
+        popupEnglish.innerHTML = ` ${wordData.english}`;
 
         popup.style.display = "flex";
       }
