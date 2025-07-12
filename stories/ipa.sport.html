@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Sports Adventure with Leo</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .header p {
+        font-size: 1.2em;
+        color: #7f8c8d;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 25px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #3498db, #2980b9);
+        color: white;
+      }
+
+      .btn-secondary {
+        background: linear-gradient(45deg, #e74c3c, #c0392b);
+        color: white;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .story-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .sentence {
+        margin-bottom: 25px;
+        padding: 20px;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .sentence::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background: linear-gradient(45deg, #3498db, #2980b9);
+        border-radius: 2px;
+      }
+
+      .sentence:nth-child(even) {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      }
+
+      .sentence:nth-child(odd) {
+        background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+      }
+
+      .sentence:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .sentence-content {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .sentence-number {
+        background: linear-gradient(45deg, #3498db, #2980b9);
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9em;
+        flex-shrink: 0;
+        margin-top: 5px;
+      }
+
+      .sentence-text {
+        flex: 1;
+      }
+
+      .english {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+        color: #2c3e50;
+        line-height: 1.7;
+      }
+
+      .phonetic {
+        font-size: 0.95em;
+        color: #7f8c8d;
+        font-style: italic;
+        background: rgba(52, 152, 219, 0.1);
+        padding: 8px 12px;
+        border-radius: 8px;
+        margin-top: 8px;
+        border-left: 3px solid #3498db;
+      }
+
+      .play-btn {
+        background: linear-gradient(45deg, #27ae60, #2ecc71);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 5px;
+        flex-shrink: 0;
+      }
+
+      .play-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+      }
+
+      .play-btn:active {
+        transform: scale(0.95);
+      }
+
+      .emoji {
+        font-size: 1.3em;
+        margin: 0 5px;
+      }
+
+      .phonetic-mode .phonetic {
+        display: block;
+      }
+
+      .phonetic-mode .english {
+        opacity: 0.6;
+      }
+
+      .highlight {
+        background: linear-gradient(45deg, #f39c12, #e67e22);
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+      }
+
+      .stats {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 30px;
+        padding: 20px;
+        background: rgba(52, 152, 219, 0.1);
+        border-radius: 15px;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2em;
+        font-weight: bold;
+        color: #3498db;
+      }
+
+      .stat-label {
+        color: #7f8c8d;
+        font-size: 0.9em;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 15px;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .controls {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .sentence-content {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .sentence-number {
+          align-self: flex-start;
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.6s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header fade-in">
+        <h1>🏆 My Sports Adventure with Leo 🏆</h1>
+        <p>An Interactive Language Learning Story</p>
+      </div>
+
+      <div class="controls fade-in">
+        <button class="btn btn-primary" onclick="togglePhonetic()">
+          🔤 Toggle Phonetic
+        </button>
+        <button class="btn btn-secondary" onclick="playAll()">
+          🎵 Play All
+        </button>
+      </div>
+
+      <div class="story-container fade-in">
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">1</div>
+            <div class="sentence-text">
+              <div class="english">
+                Last summer, I went on a trip with my best friend, Leo
+                <span class="emoji">🌞</span>
+              </div>
+              <div class="phonetic">
+                ˈlɑːst ˈsʌmə aɪ wɛnt ɒn ə trɪp wɪð maɪ bɛst frɛnd ˈliːəʊ
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(1)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">2</div>
+            <div class="sentence-text">
+              <div class="english">
+                We both love <span class="highlight">sport</span>, so we decided
+                to visit a town famous for its international sports festival.
+              </div>
+              <div class="phonetic">
+                wi bəʊθ lʌv spɔːt səʊ wi dɪˈsaɪdɪd tə ˈvɪzɪt ə taʊn ˈfeɪməs fər
+                ɪts ˌɪntəˈnæʃənl spɔːts ˈfɛstɪvl
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(2)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">3</div>
+            <div class="sentence-text">
+              <div class="english">
+                On the first day, we watched
+                <span class="highlight">athletics</span> at the stadium.
+              </div>
+              <div class="phonetic">
+                ɒn ðə fɜːst deɪ wi wɒtʃt æθˈlɛtɪks æt ðə ˈsteɪdiəm
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(3)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">4</div>
+            <div class="sentence-text">
+              <div class="english">
+                It was so exciting to see each athlete run, jump, and throw with
+                so much energy! <span class="emoji">🏃‍♂️💨</span>
+              </div>
+              <div class="phonetic">
+                ɪt wəz səʊ ɪkˈsaɪtɪŋ tə siː iːtʃ ˈæθliːt rʌn dʒʌmp ænd θrəʊ wɪð
+                səʊ mʌtʃ ˈɛnədʒi
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(4)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">5</div>
+            <div class="sentence-text">
+              <div class="english">
+                Next, we went to the
+                <span class="highlight">motor racing</span> event.
+              </div>
+              <div class="phonetic">
+                nɛkst wi wɛnt tə ðə ˈməʊtə ˈreɪsɪŋ ɪˈvɛnt
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(5)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">6</div>
+            <div class="sentence-text">
+              <div class="english">The noise was crazy!</div>
+              <div class="phonetic">ðə nɔɪz wəz ˈkreɪzi</div>
+            </div>
+            <button class="play-btn" onclick="playAudio(6)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">7</div>
+            <div class="sentence-text">
+              <div class="english">
+                Every racing driver tried their best to drive fast and race to
+                the finish line.
+              </div>
+              <div class="phonetic">
+                ˈɛvri ˈreɪsɪŋ ˈdraɪvə traɪd ðɛə bɛst tə draɪv fɑːst ænd reɪs tə
+                ðə ˈfɪnɪʃ laɪn
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(7)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">8</div>
+            <div class="sentence-text">
+              <div class="english">
+                Leo said he wanted to become a racing driver someday!
+                <span class="emoji">🏎️💥</span>
+              </div>
+              <div class="phonetic">
+                ˈliːəʊ sɛd hi ˈwɒntɪd tə bɪˈkʌm ə ˈreɪsɪŋ ˈdraɪvə ˈsʌmdeɪ
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(8)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">9</div>
+            <div class="sentence-text">
+              <div class="english">
+                In the evening, we relaxed by the pool and watched the
+                <span class="highlight">swimming</span> contest.
+              </div>
+              <div class="phonetic">
+                ɪn ðə ˈiːvnɪŋ wi rɪˈlækst baɪ ðə puːl ænd wɒtʃt ðə ˈswɪmɪŋ
+                ˈkɒntɛst
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(9)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">10</div>
+            <div class="sentence-text">
+              <div class="english">
+                One swimmer finished first and smiled as he got his gold medal.
+                <span class="emoji">🏊‍♀️🥇</span>
+              </div>
+              <div class="phonetic">
+                wʌn ˈswɪmə ˈfɪnɪʃt fɜːst ænd smaɪld æz hi ɡɒt hɪz ɡəʊld ˈmɛdl
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(10)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">11</div>
+            <div class="sentence-text">
+              <div class="english">
+                The next morning, we saw an intense
+                <span class="highlight">boxing</span> match in the boxing ring.
+              </div>
+              <div class="phonetic">
+                ðə nɛkst ˈmɔːnɪŋ wi sɔː ən ɪnˈtɛns ˈbɒksɪŋ mætʃ ɪn ðə ˈbɒksɪŋ
+                rɪŋ
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(11)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">12</div>
+            <div class="sentence-text">
+              <div class="english">
+                The boxers fought bravely, but one finally won with a powerful
+                punch. <span class="emoji">🥊😮</span>
+              </div>
+              <div class="phonetic">
+                ðə ˈbɒksəz fɔːt ˈbreɪvli bʌt wʌn ˈfaɪnəli wʌn wɪð ə ˈpaʊəfl
+                pʌntʃ
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(12)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">13</div>
+            <div class="sentence-text">
+              <div class="english">
+                Later that day, we travelled to the mountains for some
+                <span class="highlight">skiing</span>.
+              </div>
+              <div class="phonetic">
+                ˈleɪtə ðæt deɪ wi ˈtrævld tə ðə ˈmaʊntɪnz fər sʌm ˈskiːɪŋ
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(13)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">14</div>
+            <div class="sentence-text">
+              <div class="english">
+                I had never tried skiing before, but the ski slopes were
+                amazing!
+              </div>
+              <div class="phonetic">
+                aɪ hæd ˈnɛvə traɪd ˈskiːɪŋ bɪˈfɔː bʌt ðə skiː sləʊps wɜːr
+                əˈmeɪzɪŋ
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(14)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">15</div>
+            <div class="sentence-text">
+              <div class="english">
+                I watched a professional skier show off his skills.
+                <span class="emoji">⛷️❄️</span>
+              </div>
+              <div class="phonetic">
+                aɪ wɒtʃt ə prəˈfɛʃnəl ˈskiːə ʃəʊ ɒf hɪz skɪlz
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(15)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">16</div>
+            <div class="sentence-text">
+              <div class="english">
+                In the afternoon, we cheered loudly at a
+                <span class="highlight">football</span> game on the pitch.
+              </div>
+              <div class="phonetic">
+                ɪn ðə ˌɑːftəˈnuːn wi tʃɪəd ˈlaʊdli æt ə ˈfʊtbɔːl ɡeɪm ɒn ðə pɪtʃ
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(16)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">17</div>
+            <div class="sentence-text">
+              <div class="english">
+                The footballers were fast and clever.
+                <span class="emoji">⚽🔥</span>
+              </div>
+              <div class="phonetic">ðə ˈfʊtbɔːləz wɜː fɑːst ænd ˈklɛvə</div>
+            </div>
+            <button class="play-btn" onclick="playAudio(17)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">18</div>
+            <div class="sentence-text">
+              <div class="english">
+                That evening, we went to an
+                <span class="highlight">ice hockey</span> match.
+              </div>
+              <div class="phonetic">
+                ðæt ˈiːvnɪŋ wi wɛnt tə ən aɪs ˈhɒki mætʃ
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(18)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">19</div>
+            <div class="sentence-text">
+              <div class="english">
+                The ice hockey rink was freezing, but the ice hockey players
+                didn't mind.
+              </div>
+              <div class="phonetic">
+                ðə aɪs ˈhɒki rɪŋk wəz ˈfriːzɪŋ bʌt ðə aɪs ˈhɒki ˈpleɪəz ˈdɪdnt
+                maɪnd
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(19)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">20</div>
+            <div class="sentence-text">
+              <div class="english">
+                They played hard and made us shout in excitement!
+                <span class="emoji">🏒⛸️</span>
+              </div>
+              <div class="phonetic">
+                ðeɪ pleɪd hɑːd ænd meɪd ʌs ʃaʊt ɪn ɪkˈsaɪtmənt
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(20)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">21</div>
+            <div class="sentence-text">
+              <div class="english">
+                The next day, we visited a green
+                <span class="highlight">golf course</span>, where some golfers
+                played calmly and seriously.
+              </div>
+              <div class="phonetic">
+                ðə nɛkst deɪ wi ˈvɪzɪtɪd ə ɡriːn ɡɒlf kɔːs wɛə sʌm ˈɡɒlfəz pleɪd
+                ˈkɑːmli ænd ˈsɪəriəsli
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(21)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">22</div>
+            <div class="sentence-text">
+              <div class="english">
+                Leo tried to play too, but hit the ball into a tree!
+                <span class="emoji">😂🏌️</span>
+              </div>
+              <div class="phonetic">
+                ˈliːəʊ traɪd tə pleɪ tuː bʌt hɪt ðə bɔːl ˈɪntə ə triː
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(22)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">23</div>
+            <div class="sentence-text">
+              <div class="english">
+                After lunch, we walked to the
+                <span class="highlight">basketball</span> court.
+              </div>
+              <div class="phonetic">
+                ˈɑːftə lʌntʃ wi wɔːkt tə ðə ˈbɑːskɪtbɔːl kɔːt
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(23)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">24</div>
+            <div class="sentence-text">
+              <div class="english">
+                The tall basketball players jumped and scored many points.
+              </div>
+              <div class="phonetic">
+                ðə tɔːl ˈbɑːskɪtbɔːl ˈpleɪəz dʒʌmpt ænd skɔːd ˈmɛni pɔɪnts
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(24)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">25</div>
+            <div class="sentence-text">
+              <div class="english">
+                It was fast and fun! <span class="emoji">🏀⛹️</span>
+              </div>
+              <div class="phonetic">ɪt wəz fɑːst ænd fʌn</div>
+            </div>
+            <button class="play-btn" onclick="playAudio(25)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">26</div>
+            <div class="sentence-text">
+              <div class="english">
+                In the late afternoon, we went
+                <span class="highlight">sailing</span> on a beautiful lake, and
+                then on the sea.
+              </div>
+              <div class="phonetic">
+                ɪn ðə leɪt ˌɑːftəˈnuːn wi wɛnt ˈseɪlɪŋ ɒn ə ˈbjuːtɪfl leɪk ænd
+                ðɛn ɒn ðə siː
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(26)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">27</div>
+            <div class="sentence-text">
+              <div class="english">
+                The wind was strong, but the sailors knew how to sail safely.
+                <span class="emoji">⛵🌊</span>
+              </div>
+              <div class="phonetic">
+                ðə wɪnd wəz strɒŋ bʌt ðə ˈseɪləz njuː haʊ tə seɪl ˈseɪfli
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(27)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">28</div>
+            <div class="sentence-text">
+              <div class="english">
+                It was the best sports weekend of our lives.
+              </div>
+              <div class="phonetic">
+                ɪt wəz ðə bɛst spɔːts ˌwiːkˈɛnd əv aʊə laɪvz
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(28)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">29</div>
+            <div class="sentence-text">
+              <div class="english">
+                We saw every type of person doing their best.
+              </div>
+              <div class="phonetic">
+                wi sɔː ˈɛvri taɪp əv ˈpɜːsən ˈduːɪŋ ðɛə bɛst
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(29)">▶</button>
+          </div>
+        </div>
+
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">30</div>
+            <div class="sentence-text">
+              <div class="english">
+                We cheered, learned, and even tried new sports ourselves!
+              </div>
+              <div class="phonetic">
+                wi tʃɪəd lɜːnd ænd ˈiːvn traɪd njuː spɔːts aʊəˈsɛlvz
+              </div>
+            </div>
+            <button class="play-btn" onclick="playAudio(30)">▶</button>
+          </div>
+        </div>
+        <div class="sentence">
+          <div class="sentence-content">
+            <div class="sentence-number">31</div>
+            <div class="sentence-text">
+              <div class="english">
+                What an unforgettable trip! <span class="emoji">🙌🎉</span>
+              </div>
+              <div class="phonetic">wɒt ən ˌʌnfəˈɡɛtəbl trɪp</div>
+            </div>
+            <button class="play-btn" onclick="playAudio(31)">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Toggle phonetic mode
+      function togglePhonetic() {
+        document
+          .querySelector(".story-container")
+          .classList.toggle("phonetic-mode");
+      }
+
+      //   // Play a sentence using Web Speech API
+      //   function playAudio(index) {
+      //     const sentence = document.querySelector(
+      //       `.sentence:nth-child(${index}) .english`
+      //     );
+      //     const text = sentence?.innerText || "";
+      //     if (!text) return;
+
+      //     // Clean the text by removing emojis and extra whitespace
+      //     const cleanText = text
+      //       .replace(
+      //         /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu,
+      //         ""
+      //       )
+      //       .trim();
+
+      //     if ("speechSynthesis" in window) {
+      //       speechSynthesis.cancel(); // stop others if any
+      //       const utterance = new SpeechSynthesisUtterance(cleanText);
+      //       utterance.lang = "en-US";
+      //       utterance.rate = 0.8;
+      //       utterance.pitch = 1;
+      //       utterance.volume = 1;
+
+      //       // Add visual feedback
+      //       const playBtn = document.querySelector(
+      //         `.sentence:nth-child(${index}) .play-btn`
+      //       );
+      //       playBtn.innerHTML = "⏸";
+      //       playBtn.style.background = "linear-gradient(45deg, #e74c3c, #c0392b)";
+
+      //       utterance.onend = () => {
+      //         playBtn.innerHTML = "▶";
+      //         playBtn.style.background =
+      //           "linear-gradient(45deg, #27ae60, #2ecc71)";
+      //       };
+
+      //       speechSynthesis.speak(utterance);
+      //     } else {
+      //       alert("Sorry, your browser does not support text-to-speech.");
+      //     }
+      //   }
+      // Play a sentence using Web Speech API
+      function playAudio(index) {
+        const sentence = document.querySelector(
+          `.sentence:nth-child(${index}) .english`
+        );
+        const text = sentence?.innerText || "";
+        if (!text) return;
+
+        // Clean the text by removing emojis and extra whitespace
+        const cleanText = text
+          .replace(
+            /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu,
+            ""
+          )
+          .trim();
+
+        if ("speechSynthesis" in window) {
+          speechSynthesis.cancel(); // stop others if any
+
+          // Reset all play buttons
+          document.querySelectorAll(".play-btn").forEach((btn) => {
+            btn.innerHTML = "▶";
+            btn.style.background = "linear-gradient(45deg, #27ae60, #2ecc71)";
+          });
+
+          const utterance = new SpeechSynthesisUtterance(cleanText);
+          utterance.lang = "en-US";
+          utterance.rate = 0.9;
+          utterance.pitch = 1;
+          utterance.volume = 1;
+
+          // Try to get a better voice
+          const voices = speechSynthesis.getVoices();
+          const preferredVoices = voices.filter(
+            (voice) =>
+              voice.lang.startsWith("en") &&
+              (voice.name.includes("Google") ||
+                voice.name.includes("Microsoft") ||
+                voice.name.includes("Alex") ||
+                voice.name.includes("Samantha"))
+          );
+
+          if (preferredVoices.length > 0) {
+            utterance.voice = preferredVoices[0];
+          } else {
+            const englishVoices = voices.filter((voice) =>
+              voice.lang.startsWith("en")
+            );
+            if (englishVoices.length > 0) {
+              utterance.voice = englishVoices[0];
+            }
+          }
+
+          // Add visual feedback
+          const playBtn = document.querySelector(
+            `.sentence:nth-child(${index}) .play-btn`
+          );
+          playBtn.innerHTML = "⏸";
+          playBtn.style.background = "linear-gradient(45deg, #e74c3c, #c0392b)";
+
+          utterance.onend = () => {
+            playBtn.innerHTML = "▶";
+            playBtn.style.background =
+              "linear-gradient(45deg, #27ae60, #2ecc71)";
+          };
+
+          speechSynthesis.speak(utterance);
+        } else {
+          alert("Sorry, your browser does not support text-to-speech.");
+        }
+      }
+
+      // Play all sentences one after another
+      function playAll() {
+        const sentences = document.querySelectorAll(".english");
+        let i = 0;
+
+        function playNext() {
+          if (i >= sentences.length) return;
+          const text = sentences[i].innerText;
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = "en-US";
+          utterance.rate = 1;
+          utterance.onend = () => {
+            i++;
+            setTimeout(playNext, 600); // slight pause between sentences
+          };
+          speechSynthesis.speak(utterance);
+        }
+
+        speechSynthesis.cancel(); // stop current queue
+        playNext();
+      }
+    </script>
+  </body>
+</html>
