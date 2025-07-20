@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Liệu Học Tiếng Anh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: slideInUp 0.6s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section h2 {
+            color: #4a5568;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section h2::before {
+            content: "📚";
+            font-size: 1.5rem;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .topic-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .topic-subtitle {
+            font-size: 1rem;
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .keyword {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .keyword:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .resources-section h3 {
+            color: #4a5568;
+            margin: 25px 0 15px 0;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .resource-list {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+
+        .resource-item {
+            margin-bottom: 12px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .resource-item:hover {
+            background: #f1f5f9;
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .resource-item a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .resource-item a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Tài Liệu Học Tiếng Anh</h1>
+            <p>Bộ sưu tập tài liệu và chủ đề học tiếng Anh toàn diện</p>
+        </div>
+
+        <div class="section">
+            <h2>Các Chủ Đề Chính</h2>
+            <div class="topics-grid">
+                <div class="topic-card">
+                    <div class="topic-title">👨‍👩‍👧‍👦 Family</div>
+                    <div class="topic-subtitle">Family members, roles, parenting</div>
+                    <div class="keywords">
+                        <span class="keyword">relatives</span>
+                        <span class="keyword">siblings</span>
+                        <span class="keyword">childhood</span>
+                        <span class="keyword">upbringing</span>
+                        <span class="keyword">responsibility</span>
+                        <span class="keyword">single parent</span>
+                        <span class="keyword">generation</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">💪 Health & Lifestyle</div>
+                    <div class="topic-subtitle">Diet, fitness, mental health, sleep</div>
+                    <div class="keywords">
+                        <span class="keyword">balanced diet</span>
+                        <span class="keyword">workout</span>
+                        <span class="keyword">stress</span>
+                        <span class="keyword">well-being</span>
+                        <span class="keyword">routine</span>
+                        <span class="keyword">meditation</span>
+                        <span class="keyword">illness</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">💻 Technology</div>
+                    <div class="topic-subtitle">Gadgets, AI, internet, social media</div>
+                    <div class="keywords">
+                        <span class="keyword">smartphone</span>
+                        <span class="keyword">artificial intelligence</span>
+                        <span class="keyword">privacy</span>
+                        <span class="keyword">digital life</span>
+                        <span class="keyword">screen time</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">🎓 Education</div>
+                    <div class="topic-subtitle">School, university, online learning</div>
+                    <div class="keywords">
+                        <span class="keyword">homework</span>
+                        <span class="keyword">exams</span>
+                        <span class="keyword">curriculum</span>
+                        <span class="keyword">lifelong learning</span>
+                        <span class="keyword">degrees</span>
+                        <span class="keyword">virtual class</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">🌍 Environment</div>
+                    <div class="topic-subtitle">Climate, recycling, pollution</div>
+                    <div class="keywords">
+                        <span class="keyword">climate change</span>
+                        <span class="keyword">global warming</span>
+                        <span class="keyword">plastic waste</span>
+                        <span class="keyword">eco-friendly</span>
+                        <span class="keyword">renewable energy</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">💼 Jobs & Careers</div>
+                    <div class="topic-subtitle">Interviews, job types, work environment</div>
+                    <div class="keywords">
+                        <span class="keyword">promotion</span>
+                        <span class="keyword">colleague</span>
+                        <span class="keyword">resume</span>
+                        <span class="keyword">team</span>
+                        <span class="keyword">remote work</span>
+                        <span class="keyword">unemployment</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">✈️ Travel & Transport</div>
+                    <div class="topic-subtitle">Holidays, vehicles, tourism</div>
+                    <div class="keywords">
+                        <span class="keyword">airport</span>
+                        <span class="keyword">luggage</span>
+                        <span class="keyword">sightseeing</span>
+                        <span class="keyword">backpacking</span>
+                        <span class="keyword">itinerary</span>
+                        <span class="keyword">traffic</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">🎭 Culture & Society</div>
+                    <div class="topic-subtitle">Traditions, festivals, social norms</div>
+                    <div class="keywords">
+                        <span class="keyword">wedding</span>
+                        <span class="keyword">festival</span>
+                        <span class="keyword">taboo</span>
+                        <span class="keyword">belief</span>
+                        <span class="keyword">custom</span>
+                        <span class="keyword">multicultural</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">📺 Media & Communication</div>
+                    <div class="topic-subtitle">TV, news, internet, journalism</div>
+                    <div class="keywords">
+                        <span class="keyword">headline</span>
+                        <span class="keyword">article</span>
+                        <span class="keyword">blog</span>
+                        <span class="keyword">broadcast</span>
+                        <span class="keyword">reporter</span>
+                        <span class="keyword">fake news</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">💰 Money & Consumerism</div>
+                    <div class="topic-subtitle">Shopping, saving, spending</div>
+                    <div class="keywords">
+                        <span class="keyword">credit card</span>
+                        <span class="keyword">budget</span>
+                        <span class="keyword">impulsive buying</span>
+                        <span class="keyword">online shopping</span>
+                        <span class="keyword">bargain</span>
+                        <span class="keyword">ad</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">⚖️ Crime & Law</div>
+                    <div class="topic-subtitle">Types of crimes, police, justice</div>
+                    <div class="keywords">
+                        <span class="keyword">theft</span>
+                        <span class="keyword">robbery</span>
+                        <span class="keyword">arrest</span>
+                        <span class="keyword">sentence</span>
+                        <span class="keyword">jail</span>
+                        <span class="keyword">court</span>
+                        <span class="keyword">justice</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">🔬 Science & Discovery</div>
+                    <div class="topic-subtitle">Research, inventions, experiments</div>
+                    <div class="keywords">
+                        <span class="keyword">microscope</span>
+                        <span class="keyword">theory</span>
+                        <span class="keyword">innovation</span>
+                        <span class="keyword">discovery</span>
+                        <span class="keyword">hypothesis</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">🏠 Housing & Living</div>
+                    <div class="topic-subtitle">Homes, neighborhood, renting</div>
+                    <div class="keywords">
+                        <span class="keyword">apartment</span>
+                        <span class="keyword">mortgage</span>
+                        <span class="keyword">landlord</span>
+                        <span class="keyword">utilities</span>
+                        <span class="keyword">roommate</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">⏰ Time & Schedules</div>
+                    <div class="topic-subtitle">Routines, time management, planning</div>
+                    <div class="keywords">
+                        <span class="keyword">punctuality</span>
+                        <span class="keyword">deadline</span>
+                        <span class="keyword">planner</span>
+                        <span class="keyword">calendar</span>
+                        <span class="keyword">schedule</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">💼 Work & Emotions</div>
+                    <div class="topic-subtitle">Stress at work, motivation, burnout</div>
+                    <div class="keywords">
+                        <span class="keyword">workload</span>
+                        <span class="keyword">burnout</span>
+                        <span class="keyword">motivation</span>
+                        <span class="keyword">accomplishment</span>
+                        <span class="keyword">break</span>
+                        <span class="keyword">overtime</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">😊 Emotions & Personality</div>
+                    <div class="topic-subtitle">Feelings, traits, mental state</div>
+                    <div class="keywords">
+                        <span class="keyword">happy</span>
+                        <span class="keyword">anxious</span>
+                        <span class="keyword">confident</span>
+                        <span class="keyword">shy</span>
+                        <span class="keyword">extrovert</span>
+                        <span class="keyword">jealousy</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">🎵 Entertainment</div>
+                    <div class="topic-subtitle">Music, movies, hobbies</div>
+                    <div class="keywords">
+                        <span class="keyword">concert</span>
+                        <span class="keyword">genre</span>
+                        <span class="keyword">actor</span>
+                        <span class="keyword">streaming</span>
+                        <span class="keyword">dancing</span>
+                        <span class="keyword">leisure</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">🍔 Food & Drink</div>
+                    <div class="topic-subtitle">Meals, restaurant, cooking</div>
+                    <div class="keywords">
+                        <span class="keyword">recipe</span>
+                        <span class="keyword">ingredient</span>
+                        <span class="keyword">meal</span>
+                        <span class="keyword">menu</span>
+                        <span class="keyword">appetizer</span>
+                        <span class="keyword">snack</span>
+                        <span class="keyword">cuisine</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">🌦️ Weather & Nature</div>
+                    <div class="topic-subtitle">Seasons, natural disasters, wildlife</div>
+                    <div class="keywords">
+                        <span class="keyword">thunderstorm</span>
+                        <span class="keyword">drought</span>
+                        <span class="keyword">flood</span>
+                        <span class="keyword">volcano</span>
+                        <span class="keyword">wildlife</span>
+                        <span class="keyword">forecast</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">❤️ Relationships</div>
+                    <div class="topic-subtitle">Friendship, dating, communication</div>
+                    <div class="keywords">
+                        <span class="keyword">argument</span>
+                        <span class="keyword">trust</span>
+                        <span class="keyword">loyalty</span>
+                        <span class="keyword">crush</span>
+                        <span class="keyword">conversation</span>
+                        <span class="keyword">support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📌 Tài Liệu Học Tập Theo Kỹ Năng</h2>
+            
+            <div class="resources-section">
+                <h3>📖 Đọc (Reading)</h3>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        • <a href="https://breakingnewsenglish.com" target="_blank">Breaking News English</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://readtolead.com" target="_blank">Read to Lead</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://englishclub.com" target="_blank">English Club</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://englishrefresher.com" target="_blank">English Refresher</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://learnenglish.britishcouncil.org/skills/reading" target="_blank">British Council - Reading</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://www.usingenglish.com/reading/" target="_blank">Using English - Reading</a>
+                    </div>
+                </div>
+
+                <h3>🎧 Nghe / Shadowing / Dialog / Phát âm</h3>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        • <a href="https://youtube.com/@bbclearningenglish" target="_blank">BBC Learning English</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://youtube.com/@EnglishClass101" target="_blank">EnglishClass101</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://youtube.com/@ImMary113" target="_blank">Mary English</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://www.lingoneo.org/learn-english/page/speak-the-dialogues/page-2384" target="_blank">LingoNeo Dialogues</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://www.speechace.com/" target="_blank">SpeechAce</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://learnenglishteens.britishcouncil.org/skills/listening/b1-listening" target="_blank">British Council Teens - Listening</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://www.examenglish.com/B1/b1_listening_free_time.htm" target="_blank">Exam English - B1 Listening</a>
+                    </div>
+                </div>
+
+                <h3>✍️ Viết (Writing)</h3>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        • <a href="https://writeandimprove.com" target="_blank">Write and Improve</a>
+                    </div>
+                </div>
+
+                <h3>🧠 Bài tập tổng hợp</h3>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        • <a href="https://learnenglish.britishcouncil.org" target="_blank">British Council Learn English</a>
+                    </div>
+                    <div class="resource-item">
+                        • <a href="https://english-practice.net/" target="_blank">English Practice</a>
+                    </div>
+                </div>
+
+                <h3>📚 Ngữ pháp (Grammar)</h3>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        • <a href="https://www.perfect-english-grammar.com/" target="_blank">Perfect English Grammar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🌟 Chúc bạn học tiếng Anh hiệu quả và thú vị! 🌟</p>
+        </div>
+    </div>
+</body>
+</html>
